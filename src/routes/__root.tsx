@@ -1,5 +1,5 @@
 import React from "react";
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
 
 const TanStackRouterDevtools =
     process.env.NODE_ENV === "production"
@@ -16,14 +16,25 @@ const TanStackRouterDevtools =
 export const Route = createRootRoute({
     component: () => (
         <>
-            <Link to="/" className="[&.active]:font-bold">
-                Home
-            </Link>
-            <hr />
-            <Outlet />
+            <RootComponent />
             <React.Suspense>
                 <TanStackRouterDevtools />
             </React.Suspense>
         </>
     ),
 });
+
+function RootComponent() {
+    return (
+        <>
+            <div className="ui one column center aligned page grid">
+                <div className="column twelve wide">
+                    <img src="images/logo.svg" alt="logo" />
+                </div>
+            </div>
+            <div className="main container">
+                <Outlet />
+            </div>
+        </>
+    )
+}

@@ -2,17 +2,21 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getAllCategories, getAllGames } from "../lib/api";
 import { GameItem } from "../components/game-item";
 import { CategoryItem } from "../components/category-item";
+import { useAuthStore } from "../lib/store";
+import { PlayerItem } from "../components/player-item";
+
+function redirectToLogin() {
+	return redirect({
+		to: "/",
+		search: { error: "You must be logged in to access this page" },
+	});
+}
 
 export const Route = createFileRoute("/games")({
 	component: GamesPage,
 	beforeLoad: ({ context }) => {
 		if (!context.auth.isAuthenticated) {
-			throw redirect({
-				to: "/",
-				search: {
-					error: "You must be logged in to access this page",
-				},
-			});
+			throw redirectToLogin();
 		}
 	},
 	loader: () => Promise.all([getAllGames(), getAllCategories()]),
@@ -22,23 +26,17 @@ export const Route = createFileRoute("/games")({
 function GamesPage() {
 	const [games, categories] = Route.useLoaderData();
 
+	const player = useAuthStore((state) => state.player);
+	if (!player) {
+		throw redirectToLogin();
+	}
+
 	return (
 		<div className="casino">
 			<div className="ui grid centered">
 				<div className="twelve wide column">
 					<div className="ui list">
-						{/*<!-- player item template -->*/}
-						<div className="player item">
-							<img className="ui avatar image" src="" alt="avatar" />
-
-							<div className="content">
-								<div className="header">
-									<b className="name" />
-								</div>
-								<div className="description event" />
-							</div>
-						</div>
-						{/*<!-- end player item template -->*/}
+						<PlayerItem player={player} />
 					</div>
 					<div className="logout ui left floated secondary button inverted">
 						<i className="left chevron icon" />

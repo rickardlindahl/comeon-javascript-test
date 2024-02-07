@@ -2,6 +2,7 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAuthStore } from "../lib/store";
+import { useNavigate } from "@tanstack/react-router";
 
 const loginFormSchema = z.object({
 	username: z.string().min(1, { message: "A username is required" }),
@@ -21,6 +22,7 @@ export function LoginForm() {
 	});
 
 	const { error, login } = useAuthStore();
+	const navigate = useNavigate();
 
 	const onSubmit: SubmitHandler<LoginForm> = async (data) => {
 		const success = await login(data.username, data.password);
@@ -28,9 +30,9 @@ export function LoginForm() {
 		if (success) {
 			reset();
 			// redirect
-			alert("Logged in");
-		} else {
-			alert("Failed to log in");
+			await navigate({
+				to: "/games",
+			});
 		}
 	};
 

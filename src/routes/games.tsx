@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { getAllCategories, getAllGames } from "../lib/api";
 
 export const Route = createFileRoute("/games")({
 	component: GamesPage,
@@ -12,6 +13,8 @@ export const Route = createFileRoute("/games")({
 			});
 		}
 	},
+	loader: () => Promise.all([getAllGames(), getAllCategories()]),
+	staleTime: 30 * 60 * 60 * 1000,
 });
 
 function GamesPage() {

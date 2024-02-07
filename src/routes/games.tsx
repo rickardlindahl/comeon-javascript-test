@@ -1,5 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getAllCategories, getAllGames } from "../lib/api";
+import { GameItem } from "../components/game-item";
 
 export const Route = createFileRoute("/games")({
 	component: GamesPage,
@@ -18,6 +19,8 @@ export const Route = createFileRoute("/games")({
 });
 
 function GamesPage() {
+	const [games, categories] = Route.useLoaderData();
+
 	return (
 		<div className="casino">
 			<div className="ui grid centered">
@@ -53,25 +56,9 @@ function GamesPage() {
 					<h3 className="ui dividing header">Games</h3>
 
 					<div className="ui relaxed divided game items links">
-						{/*<!-- game item template -->*/}
-						<div className="game item">
-							<div className="ui small image">
-								<img src="" alt="game-icon" />
-							</div>
-							<div className="content">
-								<div className="header">
-									<b className="name" />
-								</div>
-								<div className="description" />
-								<div className="extra">
-									<div className="play ui right floated secondary button inverted">
-										Play
-										<i className="right chevron icon" />
-									</div>
-								</div>
-							</div>
-						</div>
-						{/*<!-- end game item template -->*/}
+						{games.map((game) => (
+							<GameItem key={game.code} game={game} />
+						))}
 					</div>
 				</div>
 				<div className="four wide column">

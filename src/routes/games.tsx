@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getAllCategories, getAllGames } from "../lib/api";
 import { GameItem } from "../components/game-item";
+import { CategoryItem } from "../components/category-item";
 
 export const Route = createFileRoute("/games")({
 	component: GamesPage,
@@ -65,13 +66,9 @@ function GamesPage() {
 					<h3 className="ui dividing header">Categories</h3>
 
 					<div className="ui selection animated list category items">
-						{/*<!-- category item template -->*/}
-						<div className="category item">
-							<div className="content">
-								<div className="header" />
-							</div>
-						</div>
-						{/*<!-- end category item template -->*/}
+						{categories.map((category) => (
+							<CategoryItem key={category.id} category={category} />
+						))}
 					</div>
 				</div>
 			</div>

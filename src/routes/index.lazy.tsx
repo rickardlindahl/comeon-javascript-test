@@ -1,4 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { LoginForm } from "../components/login-form";
 
 export const Route = createLazyFileRoute("/")({
 	component: Index,
@@ -7,36 +8,7 @@ export const Route = createLazyFileRoute("/")({
 function Index() {
 	return (
 		<>
-			<div className="login" style={{ display: "block" }}>
-				<div className="ui grid centered">
-					<form>
-						<div className="fields">
-							<div className="required field">
-								<div className="ui icon input">
-									<input type="text" name="username" placeholder="Username" />
-									<i className="user icon" />
-								</div>
-							</div>
-							<div className="required field">
-								<div className="ui icon input">
-									<input
-										type="password"
-										name="password"
-										placeholder="Password"
-									/>
-									<i className="lock icon" />
-								</div>
-							</div>
-							<div className="field">
-								<div className="ui icon input">
-									<input type="submit" value="Login" />
-									<i className="right chevron icon" />
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
+			<LoginForm />
 			<div className="casino" style={{ display: "none" }}>
 				<div className="ui grid centered">
 					<div className="twelve wide column">

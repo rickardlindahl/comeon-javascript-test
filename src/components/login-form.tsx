@@ -1,6 +1,7 @@
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useAuthStore } from "../lib/store";
 
 const loginFormSchema = z.object({
 	username: z.string().min(1, { message: "A username is required" }),
@@ -9,33 +10,27 @@ const loginFormSchema = z.object({
 
 type LoginForm = z.infer<typeof loginFormSchema>;
 
-async function fetchLogin(credentials: LoginForm) {
-	const res = await fetch("http://localhost:3001/login", {
-		method: "POST",
-		body: JSON.stringify(credentials),
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
-	});
-	return res.json();
-}
-
 export function LoginForm() {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm<LoginForm>({
 		resolver: zodResolver(loginFormSchema),
 	});
 
+	const { error, login } = useAuthStore();
+
 	const onSubmit: SubmitHandler<LoginForm> = async (data) => {
-		try {
-			const result = await fetchLogin(data);
-			console.log(result);
-		} catch (e) {
-			console.error(e);
+		const success = await login(data.username, data.password);
+		console.log({ success });
+		if (success) {
+			reset();
+			// redirect
+			alert("Logged in");
+		} else {
+			alert("Failed to log in");
 		}
 	};
 
@@ -77,6 +72,7 @@ export function LoginForm() {
 			</div>
 			{errors.username && <p>{errors.username.message}</p>}
 			{errors.password && <p>{errors.password.message}</p>}
+			{error && <p>{error}</p>}
 		</div>
 	);
 }

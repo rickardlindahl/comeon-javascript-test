@@ -2,9 +2,17 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import { useAuthStore } from "./lib/store";
 
 // Create a new router instance
-const router = createRouter({ routeTree });
+const router = createRouter({
+	routeTree,
+	context: {
+		auth: {
+			isAuthenticated: false,
+		},
+	},
+});
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -14,5 +22,15 @@ declare module "@tanstack/react-router" {
 }
 
 export function App() {
-	return <RouterProvider router={router} />;
+	const auth = useAuthStore();
+	return (
+		<RouterProvider
+			router={router}
+			context={{
+				auth: {
+					isAuthenticated: Boolean(auth.player),
+				},
+			}}
+		/>
+	);
 }

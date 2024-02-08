@@ -2,6 +2,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import { getAllCategories, getAllGames } from "./lib/api";
 import { useAuthStore } from "./lib/store";
 
 // Create a new router instance
@@ -10,6 +11,10 @@ const router = createRouter({
 	context: {
 		auth: {
 			isAuthenticated: false,
+		},
+		casinoApi: {
+			getAllGames: async () => [],
+			getAllCategories: async () => [],
 		},
 	},
 });
@@ -29,6 +34,10 @@ export function App() {
 			context={{
 				auth: {
 					isAuthenticated: Boolean(auth.player),
+				},
+				casinoApi: {
+					getAllGames,
+					getAllCategories,
 				},
 			}}
 		/>

@@ -5,11 +5,10 @@ import {
 	notFound,
 } from "@tanstack/react-router";
 import { PlayGame } from "../components/play-game";
-import { getAllGames } from "../lib/api";
 
 export const Route = createFileRoute("/casino/game/$code")({
-	loader: async ({ params }) => {
-		const games = await getAllGames();
+	loader: async ({ context, params }) => {
+		const games = await context.casinoApi.getAllGames();
 		const { code } = params;
 		const game = games.find((game) => game.code === code);
 		if (!game) {

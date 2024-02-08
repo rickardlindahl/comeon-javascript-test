@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import { RouterContext } from "../types/router";
 
 const TanStackRouterDevtools =
 	process.env.NODE_ENV === "production"
@@ -12,12 +13,6 @@ const TanStackRouterDevtools =
 					// default: res.TanStackRouterDevtoolsPanel
 				})),
 		  );
-
-type RouterContext = {
-	auth: {
-		isAuthenticated: boolean;
-	};
-};
 
 export const Route = createRootRouteWithContext<RouterContext>()({
 	component: () => (

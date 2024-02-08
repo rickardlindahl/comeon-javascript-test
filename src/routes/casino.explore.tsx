@@ -1,6 +1,5 @@
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
-import { getAllCategories, getAllGames } from "../lib/api";
 import { GameItem } from "../components/game-item";
 import { CategoryItem } from "../components/category-item";
 import { useAuthStore } from "../lib/store";
@@ -31,7 +30,11 @@ export const Route = createFileRoute("/casino/explore")({
 			});
 		}
 	},
-	loader: () => Promise.all([getAllGames(), getAllCategories()]),
+	loader: ({ context }) =>
+		Promise.all([
+			context.casinoApi.getAllGames(),
+			context.casinoApi.getAllCategories(),
+		]),
 	staleTime: 30 * 60 * 60 * 1000,
 	validateSearch: gamesSearchSchema,
 });

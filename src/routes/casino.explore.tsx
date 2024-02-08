@@ -4,21 +4,13 @@ import { GameItem } from "../components/game-item";
 import { CategoryItem } from "../components/category-item";
 import { useAuthStore } from "../lib/store";
 import { PlayerItem } from "../components/player-item";
-import { Game } from "../types/api";
 import { NOT_LOGGED_IN } from "../lib/codes";
 import { LogoutButton } from "../components/logout-button";
 import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 
-function isGameMatchingSearch(game: Game, search: string) {
-	return (
-		game.name.toLowerCase().includes(search.toLowerCase()) ||
-		game.description.toLowerCase().includes(search.toLowerCase())
-	);
-}
-
 const gamesSearchSchema = z.object({
-	filterGames: z.string().optional(),
+	q: z.string().optional(),
 	categoryId: z.number().optional(),
 });
 
@@ -32,13 +24,13 @@ export const Route = createFileRoute("/casino/explore")({
 			});
 		}
 	},
-	loaderDeps: ({ search: { categoryId, filterGames } }) => ({
-		filterGames,
+	loaderDeps: ({ search: { categoryId, q } }) => ({
 		categoryId,
+		q,
 	}),
-	loader: ({ context, deps: { categoryId } }) =>
+	loader: ({ context, deps: { categoryId, q } }) =>
 		Promise.all([
-			context.casinoApi.getGames({ categoryIds_like: categoryId }),
+			context.casinoApi.getGames({ categoryIds_like: categoryId, q }),
 			context.casinoApi.getAllCategories(),
 		]),
 	staleTime: 30 * 60 * 60 * 1000,
@@ -47,7 +39,7 @@ export const Route = createFileRoute("/casino/explore")({
 
 function CasinoExplorePage() {
 	const [games, categories] = Route.useLoaderData();
-	const { categoryId, filterGames } = Route.useSearch();
+	const { categoryId, q } = Route.useSearch();
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
@@ -69,13 +61,9 @@ function CasinoExplorePage() {
 	useEffect(() => {
 		navigate({
 			to: "/casino/explore",
-			search: (prev) => ({ ...prev, filterGames: debouncedValue || undefined }),
+			search: (prev) => ({ ...prev, q: debouncedValue || undefined }),
 		});
 	}, [debouncedValue, navigate]);
-
-	const filteredGames = filterGames
-		? games.filter((game) => isGameMatchingSearch(game, filterGames))
-		: games;
 
 	return (
 		<div className="casino">
@@ -103,13 +91,13 @@ function CasinoExplorePage() {
 					<h3 className="ui dividing header">Games</h3>
 
 					<div className="ui relaxed divided game items links">
-						{filteredGames.map((game) => (
+						{games.map((game) => (
 							<GameItem key={game.code} game={game} />
 						))}
-						{filteredGames.length === 0 && (
+						{games.length === 0 && (
 							<>
 								<p>
-									No games found matching "{filterGames}"
+									No games found matching "{q}"
 									{categoryId !== undefined
 										? ` in category "${getCategoryById(categoryId)?.name}"`
 										: ""}

@@ -36,6 +36,7 @@ export function createCasinoApi(baseUrl: string) {
 	type GetGamesOptions = {
 		code?: string;
 		categoryIds_like?: number;
+		q?: string;
 	};
 
 	async function getGames(
@@ -51,6 +52,10 @@ export function createCasinoApi(baseUrl: string) {
 				"categoryIds_like",
 				options.categoryIds_like.toString(),
 			);
+		}
+
+		if (options.q) {
+			searchParams.append("q", options.q);
 		}
 
 		const queryString =

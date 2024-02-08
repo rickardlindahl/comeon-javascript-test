@@ -11,7 +11,7 @@ declare global {
 	}
 }
 
-export const Route = createFileRoute("/games/$code")({
+export const Route = createFileRoute("/casino/game/$code")({
 	component: GamePage,
 });
 

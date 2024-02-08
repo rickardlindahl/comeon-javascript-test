@@ -14,7 +14,7 @@ export function GameItem({ game }: { game: Game }) {
 				<div className="description">{game.description}</div>
 				<div className="extra">
 					<Link
-						to="/games/$code"
+						to="/casino/game/$code"
 						params={{ code: game.code }}
 						className="play ui right floated secondary button inverted"
 					>

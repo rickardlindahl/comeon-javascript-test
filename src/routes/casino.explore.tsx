@@ -49,7 +49,7 @@ function GamesPage() {
 	const player = useAuthStore((state) => state.player);
 
 	const matchRoute = useMatchRoute();
-	const params = matchRoute({ to: "/games/$code" });
+	const params = matchRoute({ to: "/casino/game/$code" });
 	const isPlayingGame = params !== false;
 
 	const navigate = useNavigate();

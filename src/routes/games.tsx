@@ -64,13 +64,13 @@ function GamesPage() {
 		? games.filter((game) => isGameMatchingSearch(game, filterGames))
 		: games;
 
-	const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const value = event.target.value;
 		navigate({
 			to: "/games",
 			search: () => ({ filterGames: value }),
 		});
-	};
+	}
 
 	return (
 		<>

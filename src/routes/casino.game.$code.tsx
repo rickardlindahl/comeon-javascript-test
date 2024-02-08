@@ -12,10 +12,10 @@ declare global {
 }
 
 export const Route = createFileRoute("/casino/game/$code")({
-	component: GamePage,
+	component: PlayGamePage,
 });
 
-function GamePage() {
+function PlayGamePage() {
 	const { code } = Route.useParams();
 	const navigate = useNavigate();
 

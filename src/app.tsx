@@ -1,5 +1,4 @@
 import { RouterProvider, createRouter } from "@tanstack/react-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { CasinoApiProvider } from "./components/casino-api-context";
 // Import the generated route tree
@@ -27,24 +26,20 @@ declare module "@tanstack/react-router" {
 	}
 }
 
-const queryClient = new QueryClient();
-
 export function App() {
 	const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
 	return (
 		<CasinoApiProvider casinoApi={casinoApi}>
-			<QueryClientProvider client={queryClient}>
-				<RouterProvider
-					router={router}
-					context={{
-						auth: {
-							isAuthenticated,
-						},
-						casinoApi,
-					}}
-				/>
-			</QueryClientProvider>
+			<RouterProvider
+				router={router}
+				context={{
+					auth: {
+						isAuthenticated,
+					},
+					casinoApi,
+				}}
+			/>
 		</CasinoApiProvider>
 	);
 }

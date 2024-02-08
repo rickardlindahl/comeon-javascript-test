@@ -22,7 +22,7 @@ const gamesSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/casino/explore")({
-	component: GamesPage,
+	component: CasinoExplorePage,
 	beforeLoad: ({ context }) => {
 		if (!context.auth.isAuthenticated) {
 			throw redirect({
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/casino/explore")({
 	validateSearch: gamesSearchSchema,
 });
 
-function GamesPage() {
+function CasinoExplorePage() {
 	const [games, categories] = Route.useLoaderData();
 	const { filterCategories, filterGames } = Route.useSearch();
 

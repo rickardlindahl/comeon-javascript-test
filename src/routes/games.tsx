@@ -5,6 +5,7 @@ import {
 	useMatchRoute,
 	useNavigate,
 } from "@tanstack/react-router";
+import { z } from "zod";
 import { getAllCategories, getAllGames } from "../lib/api";
 import { GameItem } from "../components/game-item";
 import { CategoryItem } from "../components/category-item";
@@ -20,6 +21,14 @@ function redirectToLogin() {
 	});
 }
 
+function isGameMatchingSearch(game: Game, search: string) {
+	return game.name.toLowerCase().includes(search.toLowerCase());
+}
+
+const gamesSearchSchema = z.object({
+	filterGames: z.string().optional(),
+});
+
 export const Route = createFileRoute("/games")({
 	component: GamesPage,
 	beforeLoad: ({ context }) => {
@@ -29,10 +38,12 @@ export const Route = createFileRoute("/games")({
 	},
 	loader: () => Promise.all([getAllGames(), getAllCategories()]),
 	staleTime: 30 * 60 * 60 * 1000,
+	validateSearch: gamesSearchSchema,
 });
 
 function GamesPage() {
 	const [games, categories] = Route.useLoaderData();
+	const { filterGames } = Route.useSearch();
 
 	const player = useAuthStore((state) => state.player);
 	if (!player) {
@@ -48,6 +59,18 @@ function GamesPage() {
 	async function playGame(game: Game) {
 		await navigate({ to: "/games/$code", params: { code: game.code } });
 	}
+
+	const filteredGames = filterGames
+		? games.filter((game) => isGameMatchingSearch(game, filterGames))
+		: games;
+
+	const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const value = event.target.value;
+		navigate({
+			to: "/games",
+			search: () => ({ filterGames: value }),
+		});
+	};
 
 	return (
 		<>
@@ -65,7 +88,11 @@ function GamesPage() {
 					<div className="four wide column">
 						{!isPlayingGame && (
 							<div className="search ui small icon input ">
-								<input type="text" placeholder="Search Game" />
+								<input
+									type="text"
+									placeholder="Search Game"
+									onChange={onSearchChange}
+								/>
 								<i className="search icon" />
 							</div>
 						)}
@@ -77,7 +104,7 @@ function GamesPage() {
 							<h3 className="ui dividing header">Games</h3>
 
 							<div className="ui relaxed divided game items links">
-								{games.map((game) => (
+								{filteredGames.map((game) => (
 									<GameItem
 										key={game.code}
 										game={game}

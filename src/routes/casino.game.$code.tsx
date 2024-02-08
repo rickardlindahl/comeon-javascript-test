@@ -3,10 +3,20 @@ import {
 	createFileRoute,
 	useNavigate,
 	notFound,
+	redirect,
 } from "@tanstack/react-router";
 import { PlayGame } from "../components/play-game";
+import { NOT_LOGGED_IN } from "../lib/codes";
 
 export const Route = createFileRoute("/casino/game/$code")({
+	beforeLoad: ({ context }) => {
+		if (!context.auth.isAuthenticated()) {
+			throw redirect({
+				to: "/",
+				search: { error: NOT_LOGGED_IN },
+			});
+		}
+	},
 	loader: async ({ context, params }) => {
 		const games = await context.casinoApi.getGames({ code: params.code });
 		if (games.length === 0) {

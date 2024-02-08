@@ -32,7 +32,7 @@ function GamePage() {
 						className="ui right floated secondary button inverted"
 						onClick={async () => {
 							await navigate({
-								to: "/games",
+								to: "/casino/explore",
 							});
 						}}
 					>

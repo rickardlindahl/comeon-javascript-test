@@ -11,16 +11,11 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as GamesImport } from './routes/games'
 import { Route as IndexImport } from './routes/index'
 import { Route as GamesCodeImport } from './routes/games.$code'
+import { Route as CasinoExploreImport } from './routes/casino.explore'
 
 // Create/Update Routes
-
-const GamesRoute = GamesImport.update({
-  path: '/games',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
@@ -28,8 +23,13 @@ const IndexRoute = IndexImport.update({
 } as any)
 
 const GamesCodeRoute = GamesCodeImport.update({
-  path: '/$code',
-  getParentRoute: () => GamesRoute,
+  path: '/games/$code',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CasinoExploreRoute = CasinoExploreImport.update({
+  path: '/casino/explore',
+  getParentRoute: () => rootRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -40,13 +40,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/games': {
-      preLoaderRoute: typeof GamesImport
+    '/casino/explore': {
+      preLoaderRoute: typeof CasinoExploreImport
       parentRoute: typeof rootRoute
     }
     '/games/$code': {
       preLoaderRoute: typeof GamesCodeImport
-      parentRoute: typeof GamesImport
+      parentRoute: typeof rootRoute
     }
   }
 }
@@ -55,7 +55,8 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
-  GamesRoute.addChildren([GamesCodeRoute]),
+  CasinoExploreRoute,
+  GamesCodeRoute,
 ])
 
 /* prettier-ignore-end */

@@ -27,7 +27,7 @@ const gamesSearchSchema = z.object({
 	filterCategories: z.number().optional(),
 });
 
-export const Route = createFileRoute("/games")({
+export const Route = createFileRoute("/casino/explore")({
 	component: GamesPage,
 	beforeLoad: ({ context }) => {
 		if (!context.auth.isAuthenticated) {
@@ -57,7 +57,7 @@ function GamesPage() {
 	async function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const value = event.target.value;
 		await navigate({
-			to: "/games",
+			to: "/casino/explore",
 			search: (prev) => ({ ...prev, filterGames: value }),
 		});
 	}
@@ -123,7 +123,7 @@ function GamesPage() {
 										<button
 											className="ui button secondary inverted"
 											type="button"
-											onClick={() => navigate({ to: "/games" })}
+											onClick={() => navigate({ to: "/casino/explore" })}
 										>
 											Reset filters
 										</button>

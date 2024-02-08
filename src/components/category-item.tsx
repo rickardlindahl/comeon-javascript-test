@@ -12,7 +12,7 @@ export function CategoryItem({ category, isActive }: CategoryItemProps) {
 			className={`category item button secondary inverted ${
 				isActive ? "active" : ""
 			}`}
-			to="/games"
+			to="/casino/explore"
 			search={(prev) => ({ ...prev, filterCategories: category.id })}
 		>
 			<div className="content">

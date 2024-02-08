@@ -30,7 +30,7 @@ export function LoginForm() {
 			reset();
 
 			await navigate({
-				to: "/games",
+				to: "/casino/explore",
 			});
 		}
 	};

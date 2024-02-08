@@ -11,7 +11,7 @@ import { GameItem } from "../components/game-item";
 import { CategoryItem } from "../components/category-item";
 import { useAuthStore } from "../lib/store";
 import { PlayerItem } from "../components/player-item";
-import { Game } from "../types/api";
+import { Category, Game } from "../types/api";
 import { NOT_LOGGED_IN } from "../lib/codes";
 
 function redirectToLogin() {
@@ -30,6 +30,7 @@ function isGameMatchingSearch(game: Game, search: string) {
 
 const gamesSearchSchema = z.object({
 	filterGames: z.string().optional(),
+	filterCategories: z.number().optional(),
 });
 
 export const Route = createFileRoute("/games")({
@@ -46,7 +47,7 @@ export const Route = createFileRoute("/games")({
 
 function GamesPage() {
 	const [games, categories] = Route.useLoaderData();
-	const { filterGames } = Route.useSearch();
+	const { filterCategories, filterGames } = Route.useSearch();
 
 	const player = useAuthStore((state) => state.player);
 	if (!player) {
@@ -63,17 +64,31 @@ function GamesPage() {
 		await navigate({ to: "/games/$code", params: { code: game.code } });
 	}
 
-	function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
-		const value = event.target.value;
-		navigate({
+	async function handleCategoryClick(category: Category) {
+		await navigate({
 			to: "/games",
-			search: () => ({ filterGames: value }),
+			search: () => ({ filterCategories: category.id }),
 		});
 	}
 
+	async function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+		const value = event.target.value;
+		await navigate({
+			to: "/games",
+			search: () => ({ filterGames: value, filterCategories }),
+		});
+	}
+
+	const gamesFilteredByCategory =
+		filterCategories !== undefined
+			? games.filter((game) => game.categoryIds.includes(filterCategories))
+			: games;
+
 	const filteredGames = filterGames
-		? games.filter((game) => isGameMatchingSearch(game, filterGames))
-		: games;
+		? gamesFilteredByCategory.filter((game) =>
+				isGameMatchingSearch(game, filterGames),
+		  )
+		: gamesFilteredByCategory;
 
 	return (
 		<>
@@ -124,7 +139,11 @@ function GamesPage() {
 
 							<div className="ui selection animated list category items">
 								{categories.map((category) => (
-									<CategoryItem key={category.id} category={category} />
+									<CategoryItem
+										key={category.id}
+										category={category}
+										onCategoryClick={handleCategoryClick}
+									/>
 								))}
 							</div>
 						</div>

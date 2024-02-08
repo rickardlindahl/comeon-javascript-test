@@ -134,15 +134,24 @@ function GamesPage() {
 									/>
 								))}
 								{filteredGames.length === 0 && (
-									<p>
-										No games found matching "{filterGames}"
-										{filterCategories !== undefined
-											? ` in category "${
-													getCategoryById(filterCategories)?.name
-											  }"`
-											: ""}
-										.
-									</p>
+									<>
+										<p>
+											No games found matching "{filterGames}"
+											{filterCategories !== undefined
+												? ` in category "${
+														getCategoryById(filterCategories)?.name
+												  }"`
+												: ""}
+											.
+										</p>
+										<button
+											className="ui button secondary inverted"
+											type="button"
+											onClick={() => navigate({ to: "/games" })}
+										>
+											Reset filters
+										</button>
+									</>
 								)}
 							</div>
 						</div>

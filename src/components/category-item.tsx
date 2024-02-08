@@ -1,29 +1,23 @@
+import { Link } from "@tanstack/react-router";
 import { Category } from "../types/api";
 
 type CategoryItemProps = {
 	category: Category;
-	onCategoryClick: (category: Category) => void;
 	isActive: boolean;
 };
 
-export function CategoryItem({
-	category,
-	onCategoryClick,
-	isActive,
-}: CategoryItemProps) {
-	function handleCategoryClick() {
-		onCategoryClick(category);
-	}
-
+export function CategoryItem({ category, isActive }: CategoryItemProps) {
 	return (
-		<div
-			className={`category item ${isActive ? "active" : ""}`}
-			onClick={handleCategoryClick}
-			onKeyUp={handleCategoryClick}
+		<Link
+			className={`category item button secondary inverted ${
+				isActive ? "active" : ""
+			}`}
+			to="/games"
+			search={(prev) => ({ ...prev, filterCategories: category.id })}
 		>
 			<div className="content">
 				<div className="header">{category.name}</div>
 			</div>
-		</div>
+		</Link>
 	);
 }

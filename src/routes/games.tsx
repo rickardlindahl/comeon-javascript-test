@@ -11,7 +11,7 @@ import { GameItem } from "../components/game-item";
 import { CategoryItem } from "../components/category-item";
 import { useAuthStore } from "../lib/store";
 import { PlayerItem } from "../components/player-item";
-import { Category, Game } from "../types/api";
+import { Game } from "../types/api";
 import { NOT_LOGGED_IN } from "../lib/codes";
 
 function redirectToLogin() {
@@ -59,13 +59,6 @@ function GamesPage() {
 	const isPlayingGame = params !== false;
 
 	const navigate = useNavigate();
-
-	async function handleCategoryClick(category: Category) {
-		await navigate({
-			to: "/games",
-			search: (prev) => ({ ...prev, filterCategories: category.id }),
-		});
-	}
 
 	async function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const value = event.target.value;
@@ -155,8 +148,7 @@ function GamesPage() {
 									<CategoryItem
 										key={category.id}
 										category={category}
-										onCategoryClick={handleCategoryClick}
-										isActive={category.id === filterCategories}
+										isActive={filterCategories === category.id}
 									/>
 								))}
 							</div>

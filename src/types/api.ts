@@ -29,6 +29,6 @@ export type LogoutResponse =
 
 export type GetAllGamesResponse = Game[];
 
-export type GetAllCategoriesResponse = Category[];
+export type GetCategoriesResponse = Category[];
 
 export type CasinoApi = ReturnType<typeof createCasinoApi>;

@@ -31,7 +31,7 @@ export const Route = createFileRoute("/casino/explore")({
 	loader: async ({ context, deps: { categoryId, q } }) => {
 		const [games, categories] = await Promise.all([
 			context.casinoApi.getGames({ categoryIds_like: categoryId, q }),
-			context.casinoApi.getAllCategories(),
+			context.casinoApi.getCategories(),
 		]);
 
 		const activeCategory = categories.find(

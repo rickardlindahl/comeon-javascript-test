@@ -1,5 +1,5 @@
 import {
-	GetAllCategoriesResponse,
+	GetCategoriesResponse,
 	GetAllGamesResponse,
 	LoginResponse,
 	LogoutResponse,
@@ -71,7 +71,7 @@ export function createCasinoApi(baseUrl: string) {
 		return res.json();
 	}
 
-	async function getAllCategories(): Promise<GetAllCategoriesResponse> {
+	async function getCategories(): Promise<GetCategoriesResponse> {
 		const res = await fetch(`${baseUrl}/categories`, {
 			headers: {
 				Accept: "application/json",
@@ -85,6 +85,6 @@ export function createCasinoApi(baseUrl: string) {
 		login,
 		logout,
 		getGames,
-		getAllCategories,
+		getCategories,
 	};
 }

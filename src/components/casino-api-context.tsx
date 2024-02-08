@@ -11,7 +11,7 @@ const CasinoApiContext = createContext<CasinoApi>({
 	getGames: async () => {
 		throw new Error("No CasinoApiProvider found");
 	},
-	getAllCategories: async () => {
+	getCategories: async () => {
 		throw new Error("No CasinoApiProvider found");
 	},
 });

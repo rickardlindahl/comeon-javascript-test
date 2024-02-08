@@ -23,6 +23,10 @@ export type LoginResponse =
 	| { status: "success"; player: Player }
 	| { status: "fail"; error: string };
 
+export type LogoutResponse =
+	| { status: "success" }
+	| { status: "fail"; error: string };
+
 export type GetAllGamesResponse = Game[];
 
 export type GetAllCategoriesResponse = Category[];

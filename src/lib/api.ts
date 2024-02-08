@@ -2,6 +2,7 @@ import {
 	GetAllCategoriesResponse,
 	GetAllGamesResponse,
 	LoginResponse,
+	LogoutResponse,
 } from "../types/api";
 
 export function createCasinoApi(baseUrl: string) {
@@ -21,7 +22,7 @@ export function createCasinoApi(baseUrl: string) {
 	}
 	async function logout(credentials: {
 		username: string;
-	}): Promise<LoginResponse> {
+	}): Promise<LogoutResponse> {
 		const res = await fetch(`${baseUrl}/logout`, {
 			method: "POST",
 			body: JSON.stringify(credentials),

@@ -143,6 +143,7 @@ function GamesPage() {
 										key={category.id}
 										category={category}
 										onCategoryClick={handleCategoryClick}
+										isActive={category.id === filterCategories}
 									/>
 								))}
 							</div>

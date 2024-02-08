@@ -1,16 +1,23 @@
 import { Category } from "../types/api";
 
+type CategoryItemProps = {
+	category: Category;
+	onCategoryClick: (category: Category) => void;
+	isActive: boolean;
+};
+
 export function CategoryItem({
 	category,
 	onCategoryClick,
-}: { category: Category; onCategoryClick: (category: Category) => void }) {
+	isActive,
+}: CategoryItemProps) {
 	function handleCategoryClick() {
 		onCategoryClick(category);
 	}
 
 	return (
 		<div
-			className="category item"
+			className={`category item ${isActive ? "active" : ""}`}
 			onClick={handleCategoryClick}
 			onKeyUp={handleCategoryClick}
 		>

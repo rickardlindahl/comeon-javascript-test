@@ -28,18 +28,25 @@ export const Route = createFileRoute("/casino/explore")({
 		categoryId,
 		q,
 	}),
-	loader: ({ context, deps: { categoryId, q } }) =>
-		Promise.all([
+	loader: async ({ context, deps: { categoryId, q } }) => {
+		const [games, categories] = await Promise.all([
 			context.casinoApi.getGames({ categoryIds_like: categoryId, q }),
 			context.casinoApi.getAllCategories(),
-		]),
+		]);
+
+		const activeCategory = categories.find(
+			(category) => category.id === categoryId,
+		);
+
+		return { games, categories, activeCategory };
+	},
 	staleTime: 30 * 60 * 60 * 1000,
 	validateSearch: gamesSearchSchema,
 });
 
 function CasinoExplorePage() {
-	const [games, categories] = Route.useLoaderData();
-	const { categoryId, q } = Route.useSearch();
+	const { games, categories, activeCategory } = Route.useLoaderData();
+	const { q } = Route.useSearch();
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
@@ -52,10 +59,6 @@ function CasinoExplorePage() {
 	async function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const value = event.target.value;
 		setInputValue(value);
-	}
-
-	function getCategoryById(id: number) {
-		return categories.find((category) => category.id === id);
 	}
 
 	useEffect(() => {
@@ -98,8 +101,8 @@ function CasinoExplorePage() {
 							<>
 								<p>
 									No games found matching "{q}"
-									{categoryId !== undefined
-										? ` in category "${getCategoryById(categoryId)?.name}"`
+									{activeCategory !== undefined
+										? ` in category "${activeCategory.name}"`
 										: ""}
 									.
 								</p>
@@ -108,8 +111,8 @@ function CasinoExplorePage() {
 									type="button"
 									onClick={() => {
 										if (!inputRef.current) return;
-										setInputValue("");
 										inputRef.current.value = "";
+										navigate({ to: "/casino/explore" });
 									}}
 								>
 									Reset filters
@@ -126,7 +129,7 @@ function CasinoExplorePage() {
 							<CategoryItem
 								key={category.id}
 								category={category}
-								isActive={categoryId === category.id}
+								isActive={activeCategory?.id === category.id}
 							/>
 						))}
 					</div>

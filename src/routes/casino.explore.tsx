@@ -68,71 +68,69 @@ function CasinoExplorePage() {
 		: gamesFilteredByCategory;
 
 	return (
-		<>
-			<div className="casino">
-				<div className="ui grid centered">
-					<div className="twelve wide column">
-						<div className="ui list">
-							{player && <PlayerItem player={player} />}
-						</div>
-						<LogoutButton />
+		<div className="casino">
+			<div className="ui grid centered">
+				<div className="twelve wide column">
+					<div className="ui list">
+						{player && <PlayerItem player={player} />}
 					</div>
-					<div className="four wide column">
-						<div className="search ui small icon input ">
-							<input
-								type="text"
-								placeholder="Search Game"
-								onChange={onSearchChange}
-							/>
-							<i className="search icon" />
-						</div>
-					</div>
+					<LogoutButton />
 				</div>
-				<div className="ui grid">
-					<div className="twelve wide column">
-						<h3 className="ui dividing header">Games</h3>
-
-						<div className="ui relaxed divided game items links">
-							{filteredGames.map((game) => (
-								<GameItem key={game.code} game={game} />
-							))}
-							{filteredGames.length === 0 && (
-								<>
-									<p>
-										No games found matching "{filterGames}"
-										{filterCategories !== undefined
-											? ` in category "${
-													getCategoryById(filterCategories)?.name
-											  }"`
-											: ""}
-										.
-									</p>
-									<button
-										className="ui button secondary inverted"
-										type="button"
-										onClick={() => navigate({ to: "/casino/explore" })}
-									>
-										Reset filters
-									</button>
-								</>
-							)}
-						</div>
-					</div>
-					<div className="four wide column">
-						<h3 className="ui dividing header">Categories</h3>
-
-						<div className="ui selection animated list category items">
-							{categories.map((category) => (
-								<CategoryItem
-									key={category.id}
-									category={category}
-									isActive={filterCategories === category.id}
-								/>
-							))}
-						</div>
+				<div className="four wide column">
+					<div className="search ui small icon input ">
+						<input
+							type="text"
+							placeholder="Search Game"
+							onChange={onSearchChange}
+						/>
+						<i className="search icon" />
 					</div>
 				</div>
 			</div>
-		</>
+			<div className="ui grid">
+				<div className="twelve wide column">
+					<h3 className="ui dividing header">Games</h3>
+
+					<div className="ui relaxed divided game items links">
+						{filteredGames.map((game) => (
+							<GameItem key={game.code} game={game} />
+						))}
+						{filteredGames.length === 0 && (
+							<>
+								<p>
+									No games found matching "{filterGames}"
+									{filterCategories !== undefined
+										? ` in category "${
+												getCategoryById(filterCategories)?.name
+										  }"`
+										: ""}
+									.
+								</p>
+								<button
+									className="ui button secondary inverted"
+									type="button"
+									onClick={() => navigate({ to: "/casino/explore" })}
+								>
+									Reset filters
+								</button>
+							</>
+						)}
+					</div>
+				</div>
+				<div className="four wide column">
+					<h3 className="ui dividing header">Categories</h3>
+
+					<div className="ui selection animated list category items">
+						{categories.map((category) => (
+							<CategoryItem
+								key={category.id}
+								category={category}
+								isActive={filterCategories === category.id}
+							/>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 }

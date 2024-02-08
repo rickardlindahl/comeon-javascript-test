@@ -13,7 +13,7 @@ export function CategoryItem({ category, isActive }: CategoryItemProps) {
 				isActive ? "active" : ""
 			}`}
 			to="/casino/explore"
-			search={(prev) => ({ ...prev, filterCategories: category.id })}
+			search={(prev) => ({ ...prev, categoryId: category.id })}
 		>
 			<div className="content">
 				<div className="header">{category.name}</div>

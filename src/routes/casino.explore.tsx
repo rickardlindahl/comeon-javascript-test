@@ -19,7 +19,7 @@ function isGameMatchingSearch(game: Game, search: string) {
 
 const gamesSearchSchema = z.object({
 	filterGames: z.string().optional(),
-	filterCategories: z.number().optional(),
+	categoryId: z.number().optional(),
 });
 
 export const Route = createFileRoute("/casino/explore")({
@@ -32,6 +32,10 @@ export const Route = createFileRoute("/casino/explore")({
 			});
 		}
 	},
+	loaderDeps: ({ search: { categoryId, filterGames } }) => ({
+		filterGames,
+		categoryId,
+	}),
 	loader: ({ context }) =>
 		Promise.all([
 			context.casinoApi.getGames(),
@@ -43,7 +47,7 @@ export const Route = createFileRoute("/casino/explore")({
 
 function CasinoExplorePage() {
 	const [games, categories] = Route.useLoaderData();
-	const { filterCategories, filterGames } = Route.useSearch();
+	const { categoryId, filterGames } = Route.useSearch();
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
@@ -70,8 +74,8 @@ function CasinoExplorePage() {
 	}, [debouncedValue, navigate]);
 
 	const gamesFilteredByCategory =
-		filterCategories !== undefined
-			? games.filter((game) => game.categoryIds.includes(filterCategories))
+		categoryId !== undefined
+			? games.filter((game) => game.categoryIds.includes(categoryId))
 			: games;
 
 	const filteredGames = filterGames
@@ -113,10 +117,8 @@ function CasinoExplorePage() {
 							<>
 								<p>
 									No games found matching "{filterGames}"
-									{filterCategories !== undefined
-										? ` in category "${
-												getCategoryById(filterCategories)?.name
-										  }"`
+									{categoryId !== undefined
+										? ` in category "${getCategoryById(categoryId)?.name}"`
 										: ""}
 									.
 								</p>
@@ -143,7 +145,7 @@ function CasinoExplorePage() {
 							<CategoryItem
 								key={category.id}
 								category={category}
-								isActive={filterCategories === category.id}
+								isActive={categoryId === category.id}
 							/>
 						))}
 					</div>

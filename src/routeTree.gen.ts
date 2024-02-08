@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as GamesImport } from './routes/games'
+import { Route as GamesCodeImport } from './routes/games.$code'
 
 // Create Virtual Routes
 
@@ -31,6 +32,11 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
+const GamesCodeRoute = GamesCodeImport.update({
+  path: '/$code',
+  getParentRoute: () => GamesRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -43,11 +49,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GamesImport
       parentRoute: typeof rootRoute
     }
+    '/games/$code': {
+      preLoaderRoute: typeof GamesCodeImport
+      parentRoute: typeof GamesImport
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexLazyRoute, GamesRoute])
+export const routeTree = rootRoute.addChildren([
+  IndexLazyRoute,
+  GamesRoute.addChildren([GamesCodeRoute]),
+])
 
 /* prettier-ignore-end */

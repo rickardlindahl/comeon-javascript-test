@@ -1,6 +1,9 @@
 import { Game } from "../types/api";
 
-export function GameItem({ game }: { game: Game }) {
+export function GameItem({
+	game,
+	onPlayClicked,
+}: { game: Game; onPlayClicked: (game: Game) => void }) {
 	return (
 		<div className="game item">
 			<div className="ui small image">
@@ -12,10 +15,16 @@ export function GameItem({ game }: { game: Game }) {
 				</div>
 				<div className="description">{game.description}</div>
 				<div className="extra">
-					<div className="play ui right floated secondary button inverted">
+					<button
+						className="play ui right floated secondary button inverted"
+						type="button"
+						onClick={() => {
+							onPlayClicked(game);
+						}}
+					>
 						Play
 						<i className="right chevron icon" />
-					</div>
+					</button>
 				</div>
 			</div>
 		</div>

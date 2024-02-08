@@ -36,9 +36,9 @@ export const Route = createFileRoute("/casino/explore")({
 		filterGames,
 		categoryId,
 	}),
-	loader: ({ context }) =>
+	loader: ({ context, deps: { categoryId } }) =>
 		Promise.all([
-			context.casinoApi.getGames(),
+			context.casinoApi.getGames({ categoryIds_like: categoryId }),
 			context.casinoApi.getAllCategories(),
 		]),
 	staleTime: 30 * 60 * 60 * 1000,
@@ -73,16 +73,9 @@ function CasinoExplorePage() {
 		});
 	}, [debouncedValue, navigate]);
 
-	const gamesFilteredByCategory =
-		categoryId !== undefined
-			? games.filter((game) => game.categoryIds.includes(categoryId))
-			: games;
-
 	const filteredGames = filterGames
-		? gamesFilteredByCategory.filter((game) =>
-				isGameMatchingSearch(game, filterGames),
-		  )
-		: gamesFilteredByCategory;
+		? games.filter((game) => isGameMatchingSearch(game, filterGames))
+		: games;
 
 	return (
 		<div className="casino">

@@ -111,6 +111,9 @@ function GamesPage() {
 										onPlayClicked={playGame}
 									/>
 								))}
+								{filteredGames.length === 0 && (
+									<p>No games found matching "{filterGames}".</p>
+								)}
 							</div>
 						</div>
 						<div className="four wide column">

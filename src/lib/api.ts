@@ -19,6 +19,20 @@ export async function login(credentials: {
 	return res.json();
 }
 
+export async function logout(credentials: {
+	username: string;
+}): Promise<LoginResponse> {
+	const res = await fetch("http://localhost:3001/logout", {
+		method: "POST",
+		body: JSON.stringify(credentials),
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+		},
+	});
+	return res.json();
+}
+
 export async function getAllGames(): Promise<GetAllGamesResponse> {
 	const res = await fetch("http://localhost:3001/games", {
 		headers: {

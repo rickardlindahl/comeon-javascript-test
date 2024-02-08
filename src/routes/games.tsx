@@ -13,6 +13,7 @@ import { useAuthStore } from "../lib/store";
 import { PlayerItem } from "../components/player-item";
 import { Game } from "../types/api";
 import { NOT_LOGGED_IN } from "../lib/codes";
+import { LogoutButton } from "../components/logout-button";
 
 function redirectToLogin() {
 	return redirect({
@@ -50,9 +51,6 @@ function GamesPage() {
 	const { filterCategories, filterGames } = Route.useSearch();
 
 	const player = useAuthStore((state) => state.player);
-	if (!player) {
-		throw redirectToLogin();
-	}
 
 	const matchRoute = useMatchRoute();
 	const params = matchRoute({ to: "/games/$code" });
@@ -89,12 +87,9 @@ function GamesPage() {
 				<div className="ui grid centered">
 					<div className="twelve wide column">
 						<div className="ui list">
-							<PlayerItem player={player} />
+							{player && <PlayerItem player={player} />}
 						</div>
-						<div className="logout ui left floated secondary button inverted">
-							<i className="left chevron icon" />
-							Log Out
-						</div>
+						<LogoutButton />
 					</div>
 					<div className="four wide column">
 						{!isPlayingGame && (

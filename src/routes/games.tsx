@@ -22,7 +22,10 @@ function redirectToLogin() {
 }
 
 function isGameMatchingSearch(game: Game, search: string) {
-	return game.name.toLowerCase().includes(search.toLowerCase());
+	return (
+		game.name.toLowerCase().includes(search.toLowerCase()) ||
+		game.description.toLowerCase().includes(search.toLowerCase())
+	);
 }
 
 const gamesSearchSchema = z.object({

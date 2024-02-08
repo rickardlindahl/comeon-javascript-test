@@ -11,11 +11,12 @@ import { CategoryItem } from "../components/category-item";
 import { useAuthStore } from "../lib/store";
 import { PlayerItem } from "../components/player-item";
 import { Game } from "../types/api";
+import { NOT_LOGGED_IN } from "../lib/codes";
 
 function redirectToLogin() {
 	return redirect({
 		to: "/",
-		search: { error: "You must be logged in to access this page" },
+		search: { error: NOT_LOGGED_IN },
 	});
 }
 

@@ -7,6 +7,8 @@ import { PlayerItem } from "../components/player-item";
 import { Game } from "../types/api";
 import { NOT_LOGGED_IN } from "../lib/codes";
 import { LogoutButton } from "../components/logout-button";
+import { useEffect, useRef, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 function isGameMatchingSearch(game: Game, search: string) {
 	return (
@@ -43,21 +45,29 @@ function CasinoExplorePage() {
 	const [games, categories] = Route.useLoaderData();
 	const { filterCategories, filterGames } = Route.useSearch();
 
+	const inputRef = useRef<HTMLInputElement>(null);
+	const [inputValue, setInputValue] = useState("");
+	const [debouncedValue] = useDebounce(inputValue, 200);
+
 	const player = useAuthStore((state) => state.player);
 
 	const navigate = useNavigate();
 
 	async function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const value = event.target.value;
-		await navigate({
-			to: "/casino/explore",
-			search: (prev) => ({ ...prev, filterGames: value }),
-		});
+		setInputValue(value);
 	}
 
 	function getCategoryById(id: number) {
 		return categories.find((category) => category.id === id);
 	}
+
+	useEffect(() => {
+		navigate({
+			to: "/casino/explore",
+			search: (prev) => ({ ...prev, filterGames: debouncedValue || undefined }),
+		});
+	}, [debouncedValue, navigate]);
 
 	const gamesFilteredByCategory =
 		filterCategories !== undefined
@@ -82,6 +92,7 @@ function CasinoExplorePage() {
 				<div className="four wide column">
 					<div className="search ui small icon input ">
 						<input
+							ref={inputRef}
 							type="text"
 							placeholder="Search Game"
 							onChange={onSearchChange}
@@ -112,7 +123,11 @@ function CasinoExplorePage() {
 								<button
 									className="ui button secondary inverted"
 									type="button"
-									onClick={() => navigate({ to: "/casino/explore" })}
+									onClick={() => {
+										if (!inputRef.current) return;
+										setInputValue("");
+										inputRef.current.value = "";
+									}}
 								>
 									Reset filters
 								</button>

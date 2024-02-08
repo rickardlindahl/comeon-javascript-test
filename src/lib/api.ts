@@ -32,28 +32,29 @@ export function createCasinoApi(baseUrl: string) {
 		});
 		return res.json();
 	}
-	async function getGames(): Promise<GetAllGamesResponse> {
-		const res = await fetch(`${baseUrl}/games`, {
+
+	type GetGamesOptions = {
+		code?: string;
+	};
+
+	async function getGames(
+		options: GetGamesOptions = {},
+	): Promise<GetAllGamesResponse> {
+		const searchParams = new URLSearchParams();
+		if (options.code) {
+			searchParams.append("code", options.code);
+		}
+
+		const queryString =
+			searchParams.size > 0 ? `?${searchParams.toString()}` : "";
+
+		const res = await fetch(`${baseUrl}/games${queryString}`, {
 			headers: {
 				Accept: "application/json",
 				"Content-Type": "application/json",
 			},
 		});
 		return res.json();
-	}
-
-	async function getGameByCode(code: string) {
-		const res = await fetch(`${baseUrl}/games?code=${code}`, {
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-			},
-		});
-		const json = await res.json();
-		if (json.length === 0) {
-			throw new Error("Game not found");
-		}
-		return json[0];
 	}
 
 	async function getAllCategories(): Promise<GetAllCategoriesResponse> {
@@ -70,7 +71,6 @@ export function createCasinoApi(baseUrl: string) {
 		login,
 		logout,
 		getGames,
-		getGameByCode,
 		getAllCategories,
 	};
 }

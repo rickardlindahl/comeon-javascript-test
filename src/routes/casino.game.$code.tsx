@@ -8,13 +8,11 @@ import { PlayGame } from "../components/play-game";
 
 export const Route = createFileRoute("/casino/game/$code")({
 	loader: async ({ context, params }) => {
-		const games = await context.casinoApi.getGames();
-		const { code } = params;
-		const game = games.find((game) => game.code === code);
-		if (!game) {
+		const games = await context.casinoApi.getGames({ code: params.code });
+		if (games.length === 0) {
 			throw notFound();
 		}
-		return game;
+		return games[0];
 	},
 	component: PlayGamePage,
 	notFoundComponent: GameNotFoundPage,

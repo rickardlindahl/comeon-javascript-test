@@ -67,7 +67,7 @@ function GamesPage() {
 	async function handleCategoryClick(category: Category) {
 		await navigate({
 			to: "/games",
-			search: () => ({ filterCategories: category.id }),
+			search: (prev) => ({ ...prev, filterCategories: category.id }),
 		});
 	}
 
@@ -75,7 +75,7 @@ function GamesPage() {
 		const value = event.target.value;
 		await navigate({
 			to: "/games",
-			search: () => ({ filterGames: value, filterCategories }),
+			search: (prev) => ({ ...prev, filterGames: value }),
 		});
 	}
 

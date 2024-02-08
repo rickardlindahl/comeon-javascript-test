@@ -17,7 +17,7 @@ const gamesSearchSchema = z.object({
 export const Route = createFileRoute("/casino/explore")({
 	component: CasinoExplorePage,
 	beforeLoad: ({ context }) => {
-		if (!context.auth.isAuthenticated) {
+		if (!context.auth.isAuthenticated()) {
 			throw redirect({
 				to: "/",
 				search: { error: NOT_LOGGED_IN },

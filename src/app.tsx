@@ -10,7 +10,7 @@ const router = createRouter({
 	routeTree,
 	context: {
 		auth: {
-			isAuthenticated: false,
+			isAuthenticated: () => false,
 		},
 		casinoApi: createCasinoApi(""),
 	},
@@ -24,13 +24,14 @@ declare module "@tanstack/react-router" {
 }
 
 export function App() {
-	const auth = useAuthStore();
+	const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
 	return (
 		<RouterProvider
 			router={router}
 			context={{
 				auth: {
-					isAuthenticated: Boolean(auth.player),
+					isAuthenticated,
 				},
 				casinoApi: createCasinoApi(import.meta.env.VITE_API_URL),
 			}}

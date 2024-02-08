@@ -6,8 +6,7 @@ import { useAuthStore } from "../lib/store";
 import { PlayerItem } from "../components/player-item";
 import { NOT_LOGGED_IN } from "../lib/codes";
 import { LogoutButton } from "../components/logout-button";
-import { useEffect, useRef, useState } from "react";
-import { useDebounce } from "use-debounce";
+import { SearchGameInput } from "../components/search-game-input";
 
 const gamesSearchSchema = z.object({
 	q: z.string().optional(),
@@ -48,25 +47,9 @@ function CasinoExplorePage() {
 	const { games, categories, activeCategory } = Route.useLoaderData();
 	const { q } = Route.useSearch();
 
-	const inputRef = useRef<HTMLInputElement>(null);
-	const [inputValue, setInputValue] = useState("");
-	const [debouncedValue] = useDebounce(inputValue, 200);
-
 	const player = useAuthStore((state) => state.player);
 
 	const navigate = useNavigate();
-
-	async function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
-		const value = event.target.value;
-		setInputValue(value);
-	}
-
-	useEffect(() => {
-		navigate({
-			to: "/casino/explore",
-			search: (prev) => ({ ...prev, q: debouncedValue || undefined }),
-		});
-	}, [debouncedValue, navigate]);
 
 	return (
 		<div className="casino">
@@ -78,15 +61,14 @@ function CasinoExplorePage() {
 					<LogoutButton />
 				</div>
 				<div className="four wide column">
-					<div className="search ui small icon input ">
-						<input
-							ref={inputRef}
-							type="text"
-							placeholder="Search Game"
-							onChange={onSearchChange}
-						/>
-						<i className="search icon" />
-					</div>
+					<SearchGameInput
+						onInputChange={(q) => {
+							navigate({
+								to: "/casino/explore",
+								search: (prev) => ({ ...prev, q: q || undefined }),
+							});
+						}}
+					/>
 				</div>
 			</div>
 			<div className="ui grid">
@@ -106,17 +88,6 @@ function CasinoExplorePage() {
 										: ""}
 									.
 								</p>
-								<button
-									className="ui button secondary inverted"
-									type="button"
-									onClick={() => {
-										if (!inputRef.current) return;
-										inputRef.current.value = "";
-										navigate({ to: "/casino/explore" });
-									}}
-								>
-									Reset filters
-								</button>
 							</>
 						)}
 					</div>

@@ -15,13 +15,6 @@ import { Game } from "../types/api";
 import { NOT_LOGGED_IN } from "../lib/codes";
 import { LogoutButton } from "../components/logout-button";
 
-function redirectToLogin() {
-	return redirect({
-		to: "/",
-		search: { error: NOT_LOGGED_IN },
-	});
-}
-
 function isGameMatchingSearch(game: Game, search: string) {
 	return (
 		game.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -38,7 +31,10 @@ export const Route = createFileRoute("/games")({
 	component: GamesPage,
 	beforeLoad: ({ context }) => {
 		if (!context.auth.isAuthenticated) {
-			throw redirectToLogin();
+			throw redirect({
+				to: "/",
+				search: { error: NOT_LOGGED_IN },
+			});
 		}
 	},
 	loader: () => Promise.all([getAllGames(), getAllCategories()]),

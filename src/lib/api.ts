@@ -1,6 +1,6 @@
 import {
 	GetCategoriesResponse,
-	GetAllGamesResponse,
+	GetGamesResponse,
 	LoginResponse,
 	LogoutResponse,
 } from "../types/api";
@@ -42,7 +42,7 @@ export function createCasinoApi(baseUrl: string) {
 
 	async function getGames(
 		options: GetGamesOptions = {},
-	): Promise<GetAllGamesResponse> {
+	): Promise<GetGamesResponse> {
 		const searchParams = new URLSearchParams();
 		if (options.code) {
 			searchParams.append("code", options.code);

@@ -27,7 +27,7 @@ export type LogoutResponse =
 	| { status: "success" }
 	| { status: "fail"; error: string };
 
-export type GetAllGamesResponse = Game[];
+export type GetGamesResponse = Game[];
 
 export type GetCategoriesResponse = Category[];
 

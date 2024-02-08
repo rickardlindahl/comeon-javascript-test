@@ -32,7 +32,7 @@ export function createCasinoApi(baseUrl: string) {
 		});
 		return res.json();
 	}
-	async function getAllGames(): Promise<GetAllGamesResponse> {
+	async function getGames(): Promise<GetAllGamesResponse> {
 		const res = await fetch(`${baseUrl}/games`, {
 			headers: {
 				Accept: "application/json",
@@ -69,7 +69,7 @@ export function createCasinoApi(baseUrl: string) {
 	return {
 		login,
 		logout,
-		getAllGames,
+		getGames,
 		getGameByCode,
 		getAllCategories,
 	};

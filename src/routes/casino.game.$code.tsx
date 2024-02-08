@@ -8,7 +8,7 @@ import { PlayGame } from "../components/play-game";
 
 export const Route = createFileRoute("/casino/game/$code")({
 	loader: async ({ context, params }) => {
-		const games = await context.casinoApi.getAllGames();
+		const games = await context.casinoApi.getGames();
 		const { code } = params;
 		const game = games.find((game) => game.code === code);
 		if (!game) {

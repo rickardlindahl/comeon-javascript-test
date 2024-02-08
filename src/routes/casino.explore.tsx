@@ -34,7 +34,7 @@ export const Route = createFileRoute("/casino/explore")({
 	},
 	loader: ({ context }) =>
 		Promise.all([
-			context.casinoApi.getAllGames(),
+			context.casinoApi.getGames(),
 			context.casinoApi.getAllCategories(),
 		]),
 	staleTime: 30 * 60 * 60 * 1000,

@@ -1,10 +1,4 @@
-import {
-	Outlet,
-	createFileRoute,
-	redirect,
-	useMatchRoute,
-	useNavigate,
-} from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { getAllCategories, getAllGames } from "../lib/api";
 import { GameItem } from "../components/game-item";
@@ -48,10 +42,6 @@ function GamesPage() {
 
 	const player = useAuthStore((state) => state.player);
 
-	const matchRoute = useMatchRoute();
-	const params = matchRoute({ to: "/casino/game/$code" });
-	const isPlayingGame = params !== false;
-
 	const navigate = useNavigate();
 
 	async function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -88,66 +78,61 @@ function GamesPage() {
 						<LogoutButton />
 					</div>
 					<div className="four wide column">
-						{!isPlayingGame && (
-							<div className="search ui small icon input ">
-								<input
-									type="text"
-									placeholder="Search Game"
-									onChange={onSearchChange}
-								/>
-								<i className="search icon" />
-							</div>
-						)}
+						<div className="search ui small icon input ">
+							<input
+								type="text"
+								placeholder="Search Game"
+								onChange={onSearchChange}
+							/>
+							<i className="search icon" />
+						</div>
 					</div>
 				</div>
-				{!isPlayingGame && (
-					<div className="ui grid">
-						<div className="twelve wide column">
-							<h3 className="ui dividing header">Games</h3>
+				<div className="ui grid">
+					<div className="twelve wide column">
+						<h3 className="ui dividing header">Games</h3>
 
-							<div className="ui relaxed divided game items links">
-								{filteredGames.map((game) => (
-									<GameItem key={game.code} game={game} />
-								))}
-								{filteredGames.length === 0 && (
-									<>
-										<p>
-											No games found matching "{filterGames}"
-											{filterCategories !== undefined
-												? ` in category "${
-														getCategoryById(filterCategories)?.name
-												  }"`
-												: ""}
-											.
-										</p>
-										<button
-											className="ui button secondary inverted"
-											type="button"
-											onClick={() => navigate({ to: "/casino/explore" })}
-										>
-											Reset filters
-										</button>
-									</>
-								)}
-							</div>
-						</div>
-						<div className="four wide column">
-							<h3 className="ui dividing header">Categories</h3>
-
-							<div className="ui selection animated list category items">
-								{categories.map((category) => (
-									<CategoryItem
-										key={category.id}
-										category={category}
-										isActive={filterCategories === category.id}
-									/>
-								))}
-							</div>
+						<div className="ui relaxed divided game items links">
+							{filteredGames.map((game) => (
+								<GameItem key={game.code} game={game} />
+							))}
+							{filteredGames.length === 0 && (
+								<>
+									<p>
+										No games found matching "{filterGames}"
+										{filterCategories !== undefined
+											? ` in category "${
+													getCategoryById(filterCategories)?.name
+											  }"`
+											: ""}
+										.
+									</p>
+									<button
+										className="ui button secondary inverted"
+										type="button"
+										onClick={() => navigate({ to: "/casino/explore" })}
+									>
+										Reset filters
+									</button>
+								</>
+							)}
 						</div>
 					</div>
-				)}
+					<div className="four wide column">
+						<h3 className="ui dividing header">Categories</h3>
+
+						<div className="ui selection animated list category items">
+							{categories.map((category) => (
+								<CategoryItem
+									key={category.id}
+									category={category}
+									isActive={filterCategories === category.id}
+								/>
+							))}
+						</div>
+					</div>
+				</div>
 			</div>
-			<Outlet />
 		</>
 	);
 }

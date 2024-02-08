@@ -1,9 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { Game } from "../types/api";
 
-export function GameItem({
-	game,
-	onPlayClicked,
-}: { game: Game; onPlayClicked: (game: Game) => void }) {
+export function GameItem({ game }: { game: Game }) {
 	return (
 		<div className="game item">
 			<div className="ui small image">
@@ -15,16 +13,14 @@ export function GameItem({
 				</div>
 				<div className="description">{game.description}</div>
 				<div className="extra">
-					<button
+					<Link
+						to="/games/$code"
+						params={{ code: game.code }}
 						className="play ui right floated secondary button inverted"
-						type="button"
-						onClick={() => {
-							onPlayClicked(game);
-						}}
 					>
 						Play
 						<i className="right chevron icon" />
-					</button>
+					</Link>
 				</div>
 			</div>
 		</div>

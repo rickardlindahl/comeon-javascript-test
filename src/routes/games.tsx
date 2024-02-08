@@ -60,10 +60,6 @@ function GamesPage() {
 
 	const navigate = useNavigate();
 
-	async function playGame(game: Game) {
-		await navigate({ to: "/games/$code", params: { code: game.code } });
-	}
-
 	async function handleCategoryClick(category: Category) {
 		await navigate({
 			to: "/games",
@@ -127,11 +123,7 @@ function GamesPage() {
 
 							<div className="ui relaxed divided game items links">
 								{filteredGames.map((game) => (
-									<GameItem
-										key={game.code}
-										game={game}
-										onPlayClicked={playGame}
-									/>
+									<GameItem key={game.code} game={game} />
 								))}
 								{filteredGames.length === 0 && (
 									<>

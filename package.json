@@ -13,7 +13,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@tanstack/react-router": "^1.15.19",
-    "@tanstack/router-devtools": "^1.15.19",
+    "@tanstack/router-devtools": "^1.15.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
@@ -23,12 +23,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
-    "@tanstack/router-vite-plugin": "^1.15.20",
+    "@tanstack/router-vite-plugin": "^1.15.22",
     "@types/node": "^20.11.16",
     "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
+    "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^5.1.0"
   }
 }

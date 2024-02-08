@@ -26,10 +26,9 @@ export function LoginForm() {
 
 	const onSubmit: SubmitHandler<LoginForm> = async (data) => {
 		const success = await login(data.username, data.password);
-		console.log({ success });
 		if (success) {
 			reset();
-			// redirect
+
 			await navigate({
 				to: "/games",
 			});

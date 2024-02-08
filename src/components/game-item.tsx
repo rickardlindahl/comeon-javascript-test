@@ -5,7 +5,7 @@ export function GameItem({ game }: { game: Game }) {
 	return (
 		<div className="game item">
 			<div className="ui small image">
-				<img src={game.icon} alt="game-icon" />
+				<img src={`/${game.icon}`} alt="game-icon" />
 			</div>
 			<div className="content">
 				<div className="header">

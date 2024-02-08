@@ -60,10 +60,6 @@ function GamesPage() {
 		await navigate({ to: "/games/$code", params: { code: game.code } });
 	}
 
-	const filteredGames = filterGames
-		? games.filter((game) => isGameMatchingSearch(game, filterGames))
-		: games;
-
 	function onSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const value = event.target.value;
 		navigate({
@@ -71,6 +67,10 @@ function GamesPage() {
 			search: () => ({ filterGames: value }),
 		});
 	}
+
+	const filteredGames = filterGames
+		? games.filter((game) => isGameMatchingSearch(game, filterGames))
+		: games;
 
 	return (
 		<>

@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { type Player } from "../types/api";
-import { casinoApi } from "./api";
+import { CasinoApi, type Player } from "../types/api";
 
 type AuthState = {
 	player: Player | null;
@@ -11,8 +10,12 @@ type AuthState = {
 
 	isAuthenticated: () => boolean;
 
-	login: (username: string, password: string) => Promise<boolean>;
-	logout: (username: string) => Promise<boolean>;
+	login: (
+		loginFn: CasinoApi["login"],
+		username: string,
+		password: string,
+	) => Promise<boolean>;
+	logout: (logoutFn: CasinoApi["logout"], username: string) => Promise<boolean>;
 };
 
 export const useAuthStore = create(
@@ -28,11 +31,11 @@ export const useAuthStore = create(
 				return Boolean(state.username && state.player);
 			},
 
-			login: async (username, password) => {
+			login: async (loginFn, username, password) => {
 				set({ isLoading: true, error: null });
 
 				try {
-					const response = await casinoApi.login({ username, password });
+					const response = await loginFn({ username, password });
 
 					if (response.status === "fail") {
 						set({ isLoading: false, error: "Incorrect username or password." });
@@ -50,11 +53,11 @@ export const useAuthStore = create(
 				}
 			},
 
-			logout: async (username) => {
+			logout: async (logoutFn, username) => {
 				set({ isLoading: true, error: null });
 
 				try {
-					const response = await casinoApi.logout({ username });
+					const response = await logoutFn({ username });
 
 					if (response.status === "fail") {
 						set({ isLoading: false, error: "User does not exist." });

@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAuthStore } from "../lib/store";
 import { useNavigate } from "@tanstack/react-router";
+import { useCasinoApi } from "./casino-api-context";
 
 const loginFormSchema = z.object({
 	username: z.string().min(1, { message: "A username is required" }),
@@ -22,10 +23,11 @@ export function LoginForm() {
 	});
 
 	const { error, login } = useAuthStore();
+	const casinoApi = useCasinoApi();
 	const navigate = useNavigate();
 
 	const onSubmit: SubmitHandler<LoginForm> = async (data) => {
-		const success = await login(data.username, data.password);
+		const success = await login(casinoApi.login, data.username, data.password);
 		if (success) {
 			reset();
 

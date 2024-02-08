@@ -87,5 +87,3 @@ export function createCasinoApi(baseUrl: string) {
 		getAllCategories,
 	};
 }
-
-export const casinoApi = createCasinoApi(import.meta.env.VITE_API_URL);

@@ -1,3 +1,5 @@
+import { createCasinoApi } from "../lib/api";
+
 export type Player = {
 	name: string;
 	avatar: string;
@@ -24,3 +26,5 @@ export type LoginResponse =
 export type GetAllGamesResponse = Game[];
 
 export type GetAllCategoriesResponse = Category[];
+
+export type CasinoApi = ReturnType<typeof createCasinoApi>;

@@ -1,11 +1,8 @@
-import { getAllCategories, getAllGames } from "../lib/api";
+import { CasinoApi } from "./api";
 
 export type RouterContext = {
 	auth: {
 		isAuthenticated: boolean;
 	};
-	casinoApi: {
-		getAllCategories: typeof getAllCategories;
-		getAllGames: typeof getAllGames;
-	};
+	casinoApi: CasinoApi;
 };

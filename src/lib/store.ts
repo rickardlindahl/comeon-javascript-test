@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { type Player } from "../types/api";
-import * as CasinoApi from "../lib/api";
+import { casinoApi } from "./api";
 
 type AuthState = {
 	player: Player | null;
@@ -22,7 +22,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 		set({ isLoading: true, error: null });
 
 		try {
-			const response = await CasinoApi.login({ username, password });
+			const response = await casinoApi.login({ username, password });
 
 			if (response.status === "fail") {
 				set({ isLoading: false, error: "Incorrect username or password." });
@@ -41,7 +41,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 		set({ isLoading: true, error: null });
 
 		try {
-			const response = await CasinoApi.logout({ username });
+			const response = await casinoApi.logout({ username });
 
 			if (response.status === "fail") {
 				set({ isLoading: false, error: "User does not exist." });

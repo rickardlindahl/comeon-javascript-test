@@ -79,6 +79,10 @@ function GamesPage() {
 		});
 	}
 
+	function getCategoryById(id: number) {
+		return categories.find((category) => category.id === id);
+	}
+
 	const gamesFilteredByCategory =
 		filterCategories !== undefined
 			? games.filter((game) => game.categoryIds.includes(filterCategories))
@@ -130,7 +134,15 @@ function GamesPage() {
 									/>
 								))}
 								{filteredGames.length === 0 && (
-									<p>No games found matching "{filterGames}".</p>
+									<p>
+										No games found matching "{filterGames}"
+										{filterCategories !== undefined
+											? ` in category "${
+													getCategoryById(filterCategories)?.name
+											  }"`
+											: ""}
+										.
+									</p>
 								)}
 							</div>
 						</div>

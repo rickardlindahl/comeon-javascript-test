@@ -7,9 +7,12 @@ export function Header() {
 	const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
 	return (
-		<header>
+		<header
+			className="container"
+			style={{ backgroundColor: "rgb(26, 30, 26)" }}
+		>
 			<nav
-				className="flex items-center justify-between py-6"
+				className="flex items-center justify-between py-4"
 				aria-label="Global"
 			>
 				<div className="flex lg:flex-1">

@@ -1,6 +1,10 @@
+import { useAuthStore } from "@/lib/store";
 import { Icons } from "./icons";
+import { UserNav } from "./user-nav";
 
 export function Header() {
+	const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
 	return (
 		<header>
 			<nav
@@ -11,6 +15,7 @@ export function Header() {
 					<span className="sr-only">Your Company</span>
 					<Icons.logo className="h-8" />
 				</div>
+				{isAuthenticated() ? <UserNav /> : null}
 			</nav>
 		</header>
 	);

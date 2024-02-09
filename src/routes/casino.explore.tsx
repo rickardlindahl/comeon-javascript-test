@@ -2,10 +2,7 @@ import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { GameItem } from "../components/game-item";
 import { CategoryItem } from "../components/category-item";
-import { useAuthStore } from "../lib/store";
-import { PlayerItem } from "../components/player-item";
 import { NOT_LOGGED_IN } from "../lib/codes";
-import { LogoutButton } from "../components/logout-button";
 import { SearchGameInput } from "../components/search-game-input";
 
 const gamesSearchSchema = z.object({
@@ -47,19 +44,11 @@ function CasinoExplorePage() {
 	const { games, categories, activeCategory } = Route.useLoaderData();
 	const { q } = Route.useSearch();
 
-	const player = useAuthStore((state) => state.player);
-
 	const navigate = useNavigate();
 
 	return (
 		<div className="casino">
 			<div className="ui grid centered">
-				<div className="twelve wide column">
-					<div className="ui list">
-						{player && <PlayerItem player={player} />}
-					</div>
-					<LogoutButton />
-				</div>
 				<div className="four wide column">
 					<SearchGameInput
 						onInputChange={(q) => {

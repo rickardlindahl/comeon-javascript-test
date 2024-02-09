@@ -1,7 +1,6 @@
 import {
 	Link,
 	createFileRoute,
-	useNavigate,
 	notFound,
 	redirect,
 } from "@tanstack/react-router";

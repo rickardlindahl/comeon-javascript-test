@@ -6,6 +6,8 @@ import { routeTree } from "./routeTree.gen";
 import { createCasinoApi } from "./lib/api";
 import { useAuthStore } from "./lib/store";
 
+import "./index.css";
+
 const casinoApi = createCasinoApi(import.meta.env.VITE_API_URL);
 
 // Create a new router instance

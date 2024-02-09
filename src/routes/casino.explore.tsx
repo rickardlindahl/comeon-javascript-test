@@ -84,7 +84,7 @@ function CasinoExplorePage() {
 					/>
 				</div>
 			</div>
-			<div>
+			<div className="grid gap-4">
 				<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">Games</h1>
 
 				<div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-8">

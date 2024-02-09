@@ -17,8 +17,10 @@ function Index() {
 
 	return (
 		<>
-			<LoginForm />
-			{error === NOT_LOGGED_IN && <p>You must be logged in to play games</p>}
+			<div className="container sm:max-w-lg">
+				<LoginForm />
+				{error === NOT_LOGGED_IN && <p>You must be logged in to play games</p>}
+			</div>
 		</>
 	);
 }

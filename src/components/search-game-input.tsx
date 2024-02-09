@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 type SearchGameInputProps = {
 	onInputChange: (q: string) => void;
@@ -15,8 +17,9 @@ export function SearchGameInput({ onInputChange }: SearchGameInputProps) {
 	}, [debouncedValue, onInputChange]);
 
 	return (
-		<div className="search ui small icon input ">
-			<input
+		<div className="relative flex items-center gap-x-2">
+			<Input
+				className="rounded-none"
 				ref={inputRef}
 				type="text"
 				placeholder="Search Game"
@@ -25,7 +28,15 @@ export function SearchGameInput({ onInputChange }: SearchGameInputProps) {
 					setInputValue(value);
 				}}
 			/>
-			<i className="search icon" />
+			{inputValue && (
+				<Button
+					className="rounded-none"
+					variant="link"
+					onClick={() => setInputValue("")}
+				>
+					<span className="flex items-center gap-x-1">Clear</span>
+				</Button>
+			)}
 		</div>
 	);
 }

@@ -9,14 +9,12 @@ type CategoryItemProps = {
 
 export function CategoryItem({ category, isActive }: CategoryItemProps) {
 	return (
-		<Button asChild variant={isActive ? "default" : "outline"}>
+		<Button asChild variant={isActive ? "default" : "secondary"}>
 			<Link
 				to="/casino/explore"
 				search={(prev) => ({ ...prev, categoryId: category.id })}
 			>
-				<div className="content">
-					<div className="header">{category.name}</div>
-				</div>
+				{category.name}
 			</Link>
 		</Button>
 	);

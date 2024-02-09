@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { CasinoApi, type Player } from "../types/api";
+import { toast } from "sonner";
 
 type AuthState = {
 	player: Player | null;
 	isLoading: boolean;
-	error: string | null;
 	username: string | null;
 
 	isAuthenticated: () => boolean;
@@ -23,7 +23,6 @@ export const useAuthStore = create(
 		(set, get) => ({
 			player: null,
 			isLoading: false,
-			error: null,
 			username: null,
 
 			isAuthenticated: () => {
@@ -32,45 +31,60 @@ export const useAuthStore = create(
 			},
 
 			login: async (loginFn, username, password) => {
-				set({ isLoading: true, error: null });
+				set({ isLoading: true });
 
 				try {
 					const response = await loginFn({ username, password });
 
 					if (response.status === "fail") {
-						set({ isLoading: false, error: "Incorrect username or password." });
+						set({ isLoading: false });
+
+						toast.error("Incorrect username or password.");
+
 						return false;
 					}
 
 					set({ isLoading: false, player: response.player, username });
+
+					toast.success(`Welcome back ${response.player.name}!`);
+					setTimeout(() => {
+						toast.success(response.player.event);
+					}, 2500);
+
 					return true;
 				} catch (error) {
-					set({
-						isLoading: false,
-						error: "An error occurred. Please try again.",
-					});
+					set({ isLoading: false });
+
+					toast.error("An error occurred. Please try again.");
+
 					return false;
 				}
 			},
 
 			logout: async (logoutFn, username) => {
-				set({ isLoading: true, error: null });
+				set({ isLoading: true });
 
 				try {
 					const response = await logoutFn({ username });
 
 					if (response.status === "fail") {
-						set({ isLoading: false, error: "User does not exist." });
+						set({ isLoading: false });
+
+						toast.error("Invalid credentials.");
+
 						return false;
 					}
 
 					set({ isLoading: false, player: null, username: null });
+
+					toast.success("You have been logged out. Welcome back soon!");
+
 					return true;
 				} catch (error) {
-					set({
-						isLoading: false,
-						error: "An error occurred. Please try again.",
-					});
+					set({ isLoading: false });
+
+					toast.error("An error occurred. Please try again.");
+
 					return false;
 				}
 			},

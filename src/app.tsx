@@ -1,6 +1,7 @@
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 import { CasinoApiProvider } from "./components/casino-api-context";
+import { Toaster } from "@/components/ui/sonner";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 import { createCasinoApi } from "./lib/api";
@@ -42,6 +43,7 @@ export function App() {
 					casinoApi,
 				}}
 			/>
+			<Toaster richColors />
 		</CasinoApiProvider>
 	);
 }

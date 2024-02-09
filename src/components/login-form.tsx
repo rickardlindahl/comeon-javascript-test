@@ -27,7 +27,7 @@ export function LoginForm() {
 		resolver: zodResolver(loginFormSchema),
 	});
 
-	const { isLoading, error, login } = useAuthStore();
+	const { isLoading, login } = useAuthStore();
 	const casinoApi = useCasinoApi();
 	const navigate = useNavigate();
 

@@ -52,7 +52,7 @@ export function GameItem({ game }: { game: Game }) {
 									</ScrollArea>
 								</DialogDescription>
 							</DialogHeader>
-							<DialogFooter>
+							<DialogFooter className="flex items-center sm:justify-center">
 								<Button asChild variant="default" size="lg">
 									<Link
 										to="/casino/game/$code"

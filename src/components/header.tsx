@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/lib/store";
 import { Icons } from "./icons";
 import { UserNav } from "./user-nav";
+import { Link } from "@tanstack/react-router";
 
 export function Header() {
 	const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -13,7 +14,9 @@ export function Header() {
 			>
 				<div className="flex lg:flex-1">
 					<span className="sr-only">ComeOn!</span>
-					<Icons.logo className="h-8" />
+					<Link to="/casino/explore">
+						<Icons.logo className="h-8" />
+					</Link>
 				</div>
 				{isAuthenticated() ? <UserNav /> : null}
 			</nav>

@@ -1,9 +1,12 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useAuthStore } from "../lib/store";
 import { useCasinoApi } from "./casino-api-context";
+import { Icons } from "./icons";
+import { Button } from "./ui/button";
 
 export function LogoutButton() {
-	const { logout, username } = useAuthStore((state) => ({
+	const { isLoading, logout, username } = useAuthStore((state) => ({
+		isLoading: state.isLoading,
 		logout: state.logout,
 		username: state.username,
 	}));
@@ -12,9 +15,10 @@ export function LogoutButton() {
 	const navigate = useNavigate();
 
 	return (
-		<button
-			className="logout ui left floated secondary button inverted"
-			type="button"
+		<Button
+			className="px-0"
+			variant="ghost"
+			disabled={isLoading}
 			onClick={async () => {
 				try {
 					const success = await logout(casinoApi.logout, username ?? "");
@@ -25,12 +29,11 @@ export function LogoutButton() {
 					await navigate({ to: "/" });
 				} catch (e) {
 					console.error("Failed to logout. Please try again.", e);
-					// handle error
 				}
 			}}
 		>
-			<i className="left chevron icon" />
+			<Icons.arrowLeft className="h-4 w-4" />
 			Log Out
-		</button>
+		</Button>
 	);
 }

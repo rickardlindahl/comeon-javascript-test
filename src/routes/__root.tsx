@@ -23,8 +23,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
 	return (
 		<>
-			<Header />
 			<div className="main container">
+				<Header />
 				<Outlet />
 			</div>
 			<React.Suspense>

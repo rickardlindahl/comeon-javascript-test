@@ -59,18 +59,31 @@ function CasinoExplorePage() {
 					}}
 				/>
 			</div>
-			<ScrollArea className="whitespace-nowrap">
-				<div className="flex flex-row gap-4">
-					{categories.map((category) => (
-						<CategoryItem
-							key={category.id}
-							category={category}
-							isActive={activeCategory?.id === category.id}
-						/>
-					))}
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+				<ScrollArea className="col-span-1 whitespace-nowrap">
+					<div className="flex flex-row gap-4">
+						{categories.map((category) => (
+							<CategoryItem
+								key={category.id}
+								category={category}
+								isActive={activeCategory?.id === category.id}
+							/>
+						))}
+					</div>
+					<ScrollBar orientation="horizontal" />
+				</ScrollArea>
+
+				<div className="hidden md:block col-span-1">
+					<SearchGameInput
+						onInputChange={(q) => {
+							navigate({
+								to: "/casino/explore",
+								search: (prev) => ({ ...prev, q: q || undefined }),
+							});
+						}}
+					/>
 				</div>
-				<ScrollBar orientation="horizontal" />
-			</ScrollArea>
+			</div>
 			<div className="ui grid">
 				<div className="twelve wide column">
 					<h3 className="ui dividing header">Games</h3>

@@ -16,6 +16,7 @@ const TanStackRouterDevtools =
 
 export const Route = createRootRouteWithContext<RouterContext>()({
 	component: RootComponent,
+	notFoundComponent: RouteNotFoundComponent,
 });
 
 function RootComponent() {
@@ -33,5 +34,13 @@ function RootComponent() {
 				<TanStackRouterDevtools />
 			</React.Suspense>
 		</>
+	);
+}
+
+function RouteNotFoundComponent() {
+	return (
+		<div>
+			<h1>404 Not Found</h1>
+		</div>
 	);
 }

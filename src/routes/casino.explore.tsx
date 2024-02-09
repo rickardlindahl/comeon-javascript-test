@@ -59,7 +59,7 @@ function CasinoExplorePage() {
 	);
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-4 py-4">
 			<div className="md:hidden">
 				<SearchGameInput onInputChange={onInputChange} />
 			</div>

@@ -44,7 +44,7 @@ function PlayGamePage() {
 	const game = Route.useLoaderData();
 
 	return (
-		<div className="grid gap-4">
+		<div className="grid gap-4 py-4">
 			<div>
 				<BackButton />
 			</div>
@@ -60,7 +60,7 @@ function PlayGamePage() {
 
 function GameNotFoundPage() {
 	return (
-		<div className="grid gap-4">
+		<div className="grid gap-4 py-4">
 			<div>
 				<BackButton />
 			</div>

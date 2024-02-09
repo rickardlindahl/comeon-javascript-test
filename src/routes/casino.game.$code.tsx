@@ -29,18 +29,24 @@ export const Route = createFileRoute("/casino/game/$code")({
 	notFoundComponent: GameNotFoundPage,
 });
 
+function BackButton() {
+	return (
+		<Button asChild variant="link" className="px-0">
+			<Link to="/casino/explore">
+				<Icons.arrowLeft className="h-4 w-4" />
+				Back
+			</Link>
+		</Button>
+	);
+}
+
 function PlayGamePage() {
 	const game = Route.useLoaderData();
 
 	return (
 		<div className="grid gap-4">
 			<div>
-				<Button asChild variant="link">
-					<Link to="/casino/explore">
-						<Icons.arrowLeft className="h-4 w-4" />
-						Back
-					</Link>
-				</Button>
+				<BackButton />
 			</div>
 
 			<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
@@ -56,12 +62,7 @@ function GameNotFoundPage() {
 	return (
 		<div className="grid gap-4">
 			<div>
-				<Button asChild variant="link">
-					<Link to="/casino/explore">
-						<Icons.arrowLeft className="h-4 w-4" />
-						Back
-					</Link>
-				</Button>
+				<BackButton />
 			</div>
 
 			<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">

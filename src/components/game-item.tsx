@@ -37,7 +37,16 @@ export function GameItem({ game }: { game: Game }) {
 						<DialogContent className="sm:max-w-[425px]">
 							<DialogHeader>
 								<DialogTitle>{game.name}</DialogTitle>
-								<DialogDescription>{game.description}</DialogDescription>
+								<DialogDescription>
+									<div className="flex justify-center">
+										<img
+											src={`/${game.icon}`}
+											alt={game.name}
+											className="w-auto max-h-32 margin-x-auto"
+										/>
+									</div>
+									<p className="line-clamp-3">{game.description}</p>
+								</DialogDescription>
 							</DialogHeader>
 							<DialogFooter>
 								<Button asChild variant="default" size="lg">

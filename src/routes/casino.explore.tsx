@@ -48,14 +48,16 @@ function CasinoExplorePage() {
 
 	return (
 		<div className="flex flex-col gap-4">
-			<SearchGameInput
-				onInputChange={(q) => {
-					navigate({
-						to: "/casino/explore",
-						search: (prev) => ({ ...prev, q: q || undefined }),
-					});
-				}}
-			/>
+			<div className="md:hidden">
+				<SearchGameInput
+					onInputChange={(q) => {
+						navigate({
+							to: "/casino/explore",
+							search: (prev) => ({ ...prev, q: q || undefined }),
+						});
+					}}
+				/>
+			</div>
 			<div className="ui grid">
 				<div className="twelve wide column">
 					<h3 className="ui dividing header">Games</h3>

@@ -50,7 +50,7 @@ export const useAuthStore = create(
 
 					toast.success(`Welcome back ${response.player.name}!`);
 					setTimeout(() => {
-						toast.success(response.player.event);
+						toast.info(response.player.event);
 					}, 2500);
 
 					return true;

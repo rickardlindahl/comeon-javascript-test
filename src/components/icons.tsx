@@ -1,7 +1,8 @@
-import { type LucideProps, X } from "lucide-react";
+import { Info, type LucideProps, X } from "lucide-react";
 
 export const Icons = {
 	close: X,
+	info: Info,
 	logo: ({ ...props }: LucideProps) => (
 		<svg viewBox="0 0 120 26" {...props}>
 			<title>ComeOn</title>

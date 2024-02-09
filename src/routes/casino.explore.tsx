@@ -84,26 +84,24 @@ function CasinoExplorePage() {
 					/>
 				</div>
 			</div>
-			<div className="ui grid">
-				<div className="twelve wide column">
-					<h3 className="ui dividing header">Games</h3>
+			<div>
+				<h3 className="">Games</h3>
 
-					<div className="ui relaxed divided game items links">
-						{games.map((game) => (
-							<GameItem key={game.code} game={game} />
-						))}
-						{games.length === 0 && (
-							<>
-								<p>
-									No games found matching "{q}"
-									{activeCategory !== undefined
-										? ` in category "${activeCategory.name}"`
-										: ""}
-									.
-								</p>
-							</>
-						)}
-					</div>
+				<div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+					{games.map((game) => (
+						<GameItem key={game.code} game={game} />
+					))}
+					{games.length === 0 && (
+						<>
+							<p>
+								No games found matching "{q}"
+								{activeCategory !== undefined
+									? ` in category "${activeCategory.name}"`
+									: ""}
+								.
+							</p>
+						</>
+					)}
 				</div>
 			</div>
 		</div>

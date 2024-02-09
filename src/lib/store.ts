@@ -32,9 +32,11 @@ export const useAuthStore = create(
 
 			login: async (loginFn, username, password) => {
 				set({ isLoading: true });
+				const loadingToast = toast.loading("Logging in...");
 
 				try {
 					const response = await loginFn({ username, password });
+					toast.dismiss(loadingToast);
 
 					if (response.status === "fail") {
 						set({ isLoading: false });
@@ -54,6 +56,7 @@ export const useAuthStore = create(
 					return true;
 				} catch (error) {
 					set({ isLoading: false });
+					toast.dismiss(loadingToast);
 
 					toast.error("An error occurred. Please try again.");
 
@@ -63,9 +66,11 @@ export const useAuthStore = create(
 
 			logout: async (logoutFn, username) => {
 				set({ isLoading: true });
+				const loadingToast = toast.loading("Logging out...");
 
 				try {
 					const response = await logoutFn({ username });
+					toast.dismiss(loadingToast);
 
 					if (response.status === "fail") {
 						set({ isLoading: false });
@@ -82,6 +87,7 @@ export const useAuthStore = create(
 					return true;
 				} catch (error) {
 					set({ isLoading: false });
+					toast.dismiss(loadingToast);
 
 					toast.error("An error occurred. Please try again.");
 

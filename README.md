@@ -3,6 +3,29 @@
 
 Applicant's test for Javascript coders.
 
+This test was built with libraries such as:
+- react
+- @tanstack/react-router
+- react-hook-forms
+- zod
+- zustand
+- tailwindcss
+and a few more.
+
+```shell
+# Make sure you are running at least node v20
+cp .env.example .env
+npm install
+npm run dev
+```
+Then open a browser and go to http://localhost:5173/. Log in using the credentials mentioned in [### Login](#login)
+
+The `/` index page consists of a login screen.
+
+Successful login navigates the user to `/casino/explore`.
+
+Games are played on `/casino/game/$code`.
+
 ## Assignment Overview
 
 The assignment is to use Javascript to tie together existing HTML and data to create a minimal, working casino website.

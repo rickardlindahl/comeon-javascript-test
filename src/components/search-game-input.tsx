@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,6 @@ type SearchGameInputProps = {
 };
 
 export function SearchGameInput({ onInputChange }: SearchGameInputProps) {
-	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
 	const [debouncedValue] = useDebounce(inputValue, 200);
 
@@ -19,7 +18,6 @@ export function SearchGameInput({ onInputChange }: SearchGameInputProps) {
 	return (
 		<div className="relative flex items-center gap-x-2">
 			<Input
-				ref={inputRef}
 				type="text"
 				placeholder="Search Game"
 				onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

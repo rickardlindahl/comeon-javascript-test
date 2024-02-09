@@ -5,6 +5,7 @@ import { CategoryItem } from "../components/category-item";
 import { NOT_LOGGED_IN } from "../lib/codes";
 import { SearchGameInput } from "../components/search-game-input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { useCallback } from "react";
 
 const gamesSearchSchema = z.object({
 	q: z.string().optional(),
@@ -47,17 +48,21 @@ function CasinoExplorePage() {
 
 	const navigate = useNavigate();
 
+	const onInputChange = useCallback(
+		(q: string) => {
+			console.log("onInputChange", q);
+			navigate({
+				to: "/casino/explore",
+				search: (prev) => ({ ...prev, q: q || undefined }),
+			});
+		},
+		[navigate],
+	);
+
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="md:hidden">
-				<SearchGameInput
-					onInputChange={(q) => {
-						navigate({
-							to: "/casino/explore",
-							search: (prev) => ({ ...prev, q: q || undefined }),
-						});
-					}}
-				/>
+				<SearchGameInput onInputChange={onInputChange} />
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<ScrollArea className="col-span-1 whitespace-nowrap">
@@ -74,35 +79,29 @@ function CasinoExplorePage() {
 				</ScrollArea>
 
 				<div className="hidden md:block col-span-1">
-					<SearchGameInput
-						onInputChange={(q) => {
-							navigate({
-								to: "/casino/explore",
-								search: (prev) => ({ ...prev, q: q || undefined }),
-							});
-						}}
-					/>
+					<SearchGameInput onInputChange={onInputChange} />
 				</div>
 			</div>
 			<div className="grid gap-4">
 				<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">Games</h1>
 
-				<div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-8">
-					{games.map((game) => (
-						<GameItem key={game.code} game={game} />
-					))}
-					{games.length === 0 && (
-						<>
-							<p>
-								No games found matching "{q}"
-								{activeCategory !== undefined
-									? ` in category "${activeCategory.name}"`
-									: ""}
-								.
-							</p>
-						</>
-					)}
-				</div>
+				{games.length > 0 && (
+					<div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-8">
+						{games.map((game) => (
+							<GameItem key={game.code} game={game} />
+						))}
+					</div>
+				)}
+
+				{games.length === 0 && (
+					<p>
+						No games found matching "{q}"
+						{activeCategory !== undefined
+							? ` in category "${activeCategory.name}"`
+							: ""}
+						.
+					</p>
+				)}
 			</div>
 		</div>
 	);

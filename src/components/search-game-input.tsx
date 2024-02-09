@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDebounce } from "use-debounce";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ type SearchGameInputProps = {
 };
 
 export function SearchGameInput({ onInputChange }: SearchGameInputProps) {
+	const ref = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
 	const [debouncedValue] = useDebounce(inputValue, 200);
 
@@ -18,6 +19,7 @@ export function SearchGameInput({ onInputChange }: SearchGameInputProps) {
 	return (
 		<div className="relative flex items-center gap-x-2">
 			<Input
+				ref={ref}
 				type="text"
 				placeholder="Search Game"
 				onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +28,15 @@ export function SearchGameInput({ onInputChange }: SearchGameInputProps) {
 				}}
 			/>
 			{inputValue && (
-				<Button variant="link" onClick={() => setInputValue("")}>
+				<Button
+					variant="link"
+					onClick={() => {
+						setInputValue("");
+
+						// biome-ignore lint/style/noNonNullAssertion: The ref exists :)
+						ref.current!.value = "";
+					}}
+				>
 					<span className="flex items-center gap-x-1">Clear</span>
 				</Button>
 			)}

@@ -50,7 +50,6 @@ function CasinoExplorePage() {
 
 	const onInputChange = useCallback(
 		(q: string) => {
-			console.log("onInputChange", q);
 			navigate({
 				to: "/casino/explore",
 				search: (prev) => ({ ...prev, q: q || undefined }),

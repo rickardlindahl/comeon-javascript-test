@@ -7,6 +7,8 @@ import {
 } from "@tanstack/react-router";
 import { PlayGame } from "../components/play-game";
 import { NOT_LOGGED_IN } from "../lib/codes";
+import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/icons";
 
 export const Route = createFileRoute("/casino/game/$code")({
 	beforeLoad: ({ context }) => {
@@ -30,30 +32,42 @@ export const Route = createFileRoute("/casino/game/$code")({
 
 function PlayGamePage() {
 	const game = Route.useLoaderData();
-	const navigate = useNavigate();
 
 	return (
-		<div className="ui grid">
-			<div className="twelve wide column">
-				<h3 className="ui dividing header">{game.name}</h3>
-				<PlayGame
-					code={game.code}
-					onBackClicked={async () => {
-						await navigate({
-							to: "/casino/explore",
-						});
-					}}
-				/>
+		<div className="grid gap-4">
+			<div>
+				<Button asChild variant="link">
+					<Link to="/casino/explore">
+						<Icons.arrowLeft className="h-4 w-4" />
+						Back
+					</Link>
+				</Button>
 			</div>
+
+			<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
+				{game.name}
+			</h1>
+
+			<PlayGame code={game.code} />
 		</div>
 	);
 }
 
 function GameNotFoundPage() {
 	return (
-		<div>
-			<h1>Game not found.</h1>
-			<Link to="/casino/explore">Explore games</Link>
+		<div className="grid gap-4">
+			<div>
+				<Button asChild variant="link">
+					<Link to="/casino/explore">
+						<Icons.arrowLeft className="h-4 w-4" />
+						Back
+					</Link>
+				</Button>
+			</div>
+
+			<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
+				Game not found.
+			</h1>
 		</div>
 	);
 }

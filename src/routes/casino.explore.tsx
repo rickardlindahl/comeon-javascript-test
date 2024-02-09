@@ -4,6 +4,7 @@ import { GameItem } from "../components/game-item";
 import { CategoryItem } from "../components/category-item";
 import { NOT_LOGGED_IN } from "../lib/codes";
 import { SearchGameInput } from "../components/search-game-input";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const gamesSearchSchema = z.object({
 	q: z.string().optional(),
@@ -58,6 +59,18 @@ function CasinoExplorePage() {
 					}}
 				/>
 			</div>
+			<ScrollArea className="whitespace-nowrap">
+				<div className="flex flex-row gap-4">
+					{categories.map((category) => (
+						<CategoryItem
+							key={category.id}
+							category={category}
+							isActive={activeCategory?.id === category.id}
+						/>
+					))}
+				</div>
+				<ScrollBar orientation="horizontal" />
+			</ScrollArea>
 			<div className="ui grid">
 				<div className="twelve wide column">
 					<h3 className="ui dividing header">Games</h3>
@@ -77,19 +90,6 @@ function CasinoExplorePage() {
 								</p>
 							</>
 						)}
-					</div>
-				</div>
-				<div className="four wide column">
-					<h3 className="ui dividing header">Categories</h3>
-
-					<div className="ui selection animated list category items">
-						{categories.map((category) => (
-							<CategoryItem
-								key={category.id}
-								category={category}
-								isActive={activeCategory?.id === category.id}
-							/>
-						))}
 					</div>
 				</div>
 			</div>

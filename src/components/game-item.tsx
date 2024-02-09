@@ -18,6 +18,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 export function GameItem({ game }: { game: Game }) {
 	return (
@@ -45,7 +46,10 @@ export function GameItem({ game }: { game: Game }) {
 											className="w-auto max-h-32 margin-x-auto"
 										/>
 									</div>
-									<p className="line-clamp-3">{game.description}</p>
+									<ScrollArea className="h-[200px] p-4">
+										<p>{game.description}</p>
+										<ScrollBar orientation="vertical" />
+									</ScrollArea>
 								</DialogDescription>
 							</DialogHeader>
 							<DialogFooter>

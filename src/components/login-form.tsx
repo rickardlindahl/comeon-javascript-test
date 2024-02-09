@@ -17,7 +17,6 @@ export function LoginForm() {
 		register,
 		handleSubmit,
 		formState: { errors },
-		reset,
 	} = useForm<LoginForm>({
 		resolver: zodResolver(loginFormSchema),
 	});
@@ -29,8 +28,6 @@ export function LoginForm() {
 	const onSubmit: SubmitHandler<LoginForm> = async (data) => {
 		const success = await login(casinoApi.login, data.username, data.password);
 		if (success) {
-			reset();
-
 			await navigate({
 				to: "/casino/explore",
 			});

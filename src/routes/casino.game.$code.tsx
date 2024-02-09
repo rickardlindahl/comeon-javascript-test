@@ -5,17 +5,16 @@ import {
 	redirect,
 } from "@tanstack/react-router";
 import { PlayGame } from "../components/play-game";
-import { NOT_LOGGED_IN } from "../lib/codes";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/casino/game/$code")({
 	beforeLoad: ({ context }) => {
 		if (!context.auth.isAuthenticated()) {
-			throw redirect({
-				to: "/",
-				search: { error: NOT_LOGGED_IN },
-			});
+			toast.error("You must be logged in to play games");
+
+			throw redirect({ to: "/" });
 		}
 	},
 	loader: async ({ context, params }) => {

@@ -2,10 +2,10 @@ import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { GameItem } from "../components/game-item";
 import { CategoryItem } from "../components/category-item";
-import { NOT_LOGGED_IN } from "../lib/codes";
 import { SearchGameInput } from "../components/search-game-input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useCallback } from "react";
+import { toast } from "sonner";
 
 const gamesSearchSchema = z.object({
 	q: z.string().optional(),
@@ -16,10 +16,9 @@ export const Route = createFileRoute("/casino/explore")({
 	component: CasinoExplorePage,
 	beforeLoad: ({ context }) => {
 		if (!context.auth.isAuthenticated()) {
-			throw redirect({
-				to: "/",
-				search: { error: NOT_LOGGED_IN },
-			});
+			toast.error("You must be logged in to explore the casino");
+
+			throw redirect({ to: "/" });
 		}
 	},
 	loaderDeps: ({ search: { categoryId, q } }) => ({

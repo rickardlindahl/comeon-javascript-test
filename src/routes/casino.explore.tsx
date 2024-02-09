@@ -47,19 +47,15 @@ function CasinoExplorePage() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="casino">
-			<div className="ui grid centered">
-				<div className="four wide column">
-					<SearchGameInput
-						onInputChange={(q) => {
-							navigate({
-								to: "/casino/explore",
-								search: (prev) => ({ ...prev, q: q || undefined }),
-							});
-						}}
-					/>
-				</div>
-			</div>
+		<div className="flex flex-col gap-4">
+			<SearchGameInput
+				onInputChange={(q) => {
+					navigate({
+						to: "/casino/explore",
+						search: (prev) => ({ ...prev, q: q || undefined }),
+					});
+				}}
+			/>
 			<div className="ui grid">
 				<div className="twelve wide column">
 					<h3 className="ui dividing header">Games</h3>

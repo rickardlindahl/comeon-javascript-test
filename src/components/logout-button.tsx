@@ -16,7 +16,7 @@ export function LogoutButton() {
 
 	return (
 		<Button
-			className="px-0"
+			className="px-0 flex gap-2"
 			variant="ghost"
 			disabled={isLoading}
 			onClick={async () => {
@@ -32,7 +32,7 @@ export function LogoutButton() {
 				}
 			}}
 		>
-			<Icons.arrowLeft className="h-4 w-4" />
+			<Icons.logOut className="h-4 w-4" />
 			Log Out
 		</Button>
 	);

@@ -1,9 +1,18 @@
-import { ChevronLeft, Info, type LucideProps, X } from "lucide-react";
+import {
+	ChevronLeft,
+	Info,
+	LogIn,
+	LogOut,
+	type LucideProps,
+	X,
+} from "lucide-react";
 
 export const Icons = {
 	arrowLeft: ChevronLeft,
 	close: X,
 	info: Info,
+	logIn: LogIn,
+	logOut: LogOut,
 	logo: ({ ...props }: LucideProps) => (
 		<svg viewBox="0 0 120 26" {...props}>
 			<title>ComeOn</title>

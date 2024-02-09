@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Icons } from "./icons";
 
 const loginFormSchema = z.object({
 	username: z.string().min(1, { message: "A username is required" }),
@@ -72,7 +73,8 @@ export function LoginForm() {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit" disabled={isLoading}>
+				<Button type="submit" disabled={isLoading} className="px-0 flex gap-2">
+					<Icons.logIn className="h-4 w-4" />
 					Log In
 				</Button>
 			</form>

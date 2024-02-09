@@ -19,7 +19,6 @@ export function SearchGameInput({ onInputChange }: SearchGameInputProps) {
 	return (
 		<div className="relative flex items-center gap-x-2">
 			<Input
-				className="rounded-none"
 				ref={inputRef}
 				type="text"
 				placeholder="Search Game"
@@ -29,11 +28,7 @@ export function SearchGameInput({ onInputChange }: SearchGameInputProps) {
 				}}
 			/>
 			{inputValue && (
-				<Button
-					className="rounded-none"
-					variant="link"
-					onClick={() => setInputValue("")}
-				>
+				<Button variant="link" onClick={() => setInputValue("")}>
 					<span className="flex items-center gap-x-1">Clear</span>
 				</Button>
 			)}

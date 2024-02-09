@@ -15,14 +15,7 @@ const TanStackRouterDevtools =
 		  );
 
 export const Route = createRootRouteWithContext<RouterContext>()({
-	component: () => (
-		<>
-			<RootComponent />
-			<React.Suspense>
-				<TanStackRouterDevtools />
-			</React.Suspense>
-		</>
-	),
+	component: RootComponent,
 });
 
 function RootComponent() {
@@ -36,6 +29,9 @@ function RootComponent() {
 			<div className="main container">
 				<Outlet />
 			</div>
+			<React.Suspense>
+				<TanStackRouterDevtools />
+			</React.Suspense>
 		</>
 	);
 }

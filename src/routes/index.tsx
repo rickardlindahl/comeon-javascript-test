@@ -17,7 +17,10 @@ function Index() {
 
 	return (
 		<>
-			<div className="container sm:max-w-lg">
+			<div className="container sm:max-w-lg grid gap-8">
+				<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
+					Log In
+				</h1>
 				<LoginForm />
 				{error === NOT_LOGGED_IN && <p>You must be logged in to play games</p>}
 			</div>

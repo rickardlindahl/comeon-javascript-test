@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { RouterContext } from "../types/router";
+import { Header } from "@/components/header";
 
 const TanStackRouterDevtools =
 	process.env.NODE_ENV === "production"
@@ -22,11 +23,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
 	return (
 		<>
-			<div className="ui one column center aligned page grid">
-				<div className="column twelve wide">
-					<img src="/images/logo.svg" alt="logo" />
-				</div>
-			</div>
+			<Header />
 			<div className="main container">
 				<Outlet />
 			</div>
